@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <style>
+        .pager-wrapper{
+            width: 322px;
+            margin: 0 auto;
+            padding:40px 0 0;
+        }
+        .header-title{
+            padding-top:20px;
+            padding-bottom:20px;
+            border-bottom: 1px dashed #666666;
+        }
+        .header-title h1{
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            color: #666666;
+        }
+        .logo-box img {
+            display: block;
+            margin: 24px auto;
+            width:120px;
+            height:120px;
+        }
+        .logo-box img+img{
+            width: 292px;
+            height: 42px
+        }
+        .login-body{
+            padding-top:20px;
+        }
+        .login-body .btn-primary{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!--<div class="page-header-title">-->
+            <!--<h1 class="title">欢迎使用三网融盒路由器</h1>-->
+        <!--</div>-->
+        <div class="pager-wrapper">
+            <div class="header-title">
+                <h1>欢迎使用三网融盒路由器</h1>
+            </div>
+            <div class="text-center">
+                <div class="logo-box">
+                    <img src="../images/logo_icon.png" alt="logo">
+                    <img src="../images/logo_text.png" alt="logo">
+                </div>
+                <div class="login-body">
+                    <form action="quickSet.html" class="form-horizontal" method="post">
+                        <div class="input-icon">
+                            <input class="input" type="password" placeholder="请输入路由器管理密码" />
+                            <button type="submit" class="input-btn"> > </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

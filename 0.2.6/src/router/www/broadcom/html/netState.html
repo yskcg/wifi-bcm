@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>网络状态</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="../script/jquery-3.1.0.min.js"></script>
+    <script src="../script/common/common.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-header clearfix">
+        <div class="header-brand">
+            <a href="javascript:void(0);">
+                <img src="../images/gx_logo.png" class="logo" alt="logo">
+            </a>
+        </div>
+        <div class="nav-box clearfix">
+            <ul class="nav navbar">
+                <li>
+                    <a href="../html/quickSet.html">
+                        <img src="../images/wifi_set.png" alt="wifi"/>
+                        <span>快速设置</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="javascript:void(0);">
+                        <img src="../images/net_state.png" alt="i" />
+                        <span>网络状态</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../html/professionSet.html">
+                        <img src="../images/pro_set.png" alt="i" />
+                        <span>专业设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-wrapper pd">
+        <div class="page-content page-content-white clearfix">
+            <form class="form-horizontal">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="title">无线状态</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-content form-static-control">
+                            <div class="form-group">
+                                <label class="control-label">无线标示：</label>
+                                <div class="input-box text-center">
+                                    SSID1
+                                </div>
+                                <div class="switch-box text-center">
+                                    SSID2
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">无线功能：</label>
+                                <div class="input-box text-center">
+                                    启用
+                                </div>
+                                <div class="switch-box text-center">
+                                    关闭
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">运行模式：</label>
+                                <div class="input-box text-center">
+                                    路由模式
+                                </div>
+                                <div class="switch-box text-center">
+                                    桥接模式
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">无线模式：</label>
+                                <div class="input-box text-center">
+                                    300Mbps（802.11n）
+                                </div>
+                                <div class="switch-box text-center">
+                                    150Mbps（802.11n）
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">无线名称：</label>
+                                <div class="input-box text-center">
+                                    HiTV_96335
+                                </div>
+                                <div class="switch-box text-center">
+                                    HiTV
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">无线信道：</label>
+                                <div class="input-box text-center">
+                                    自动（<span>9</span>）
+                                </div>
+                                <div class="switch-box text-center">
+                                    自动（<span>3</span>）
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">MAC地址：</label>
+                                <div class="input-box text-center">
+                                    A4:A8:0F:FA:01:40
+                                </div>
+                                <div class="switch-box text-center">
+                                    A4:A8:0F:FA:01:50
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="title">WAN状态</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-content form-col-2">
+                            <div class="form-group">
+                                <label class="control-label">连接状态：</label>
+                                <div class="input-box text-center">
+                                    DHCP已连接 [<a href="../html/javascript:void(0);">连接</a> | <a href="../html/javascript:void(0);"> 断开</a>]
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">MAC地址：</label>
+                                <div class="input-box text-center">
+                                    A4:A8:0F:FA:01:3E
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">IP地址：</label>
+                                <div class="input-box text-center">
+                                    10.49.64.108
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">子网掩码：</label>
+                                <div class="input-box text-center">
+                                    255.255.255.0
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">网关：</label>
+                                <div class="input-box text-center">
+                                    10.49.64.1
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">无线功能：</label>
+                                <div class="input-box text-center">
+                                    <span>219.232.82.68</span>、<span>219.232.84.100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="title">LAN状态</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-content form-col-2">
+                            <div class="form-group">
+                                <label class="control-label">MAC地址：</label>
+                                <div class="input-box text-center">
+                                    A4:A8:0F:FA:01:3E
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">IP地址：</label>
+                                <div class="input-box text-center">
+                                    10.49.64.108
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">子网掩码：</label>
+                                <div class="input-box text-center">
+                                    255.255.255.0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="page-footer">
+        <p class="text-center">
+            <label>硬件版本：</label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+            <label>
+                软件版本
+            </label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

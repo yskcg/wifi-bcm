@@ -1,0 +1,58 @@
+diff a/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c b/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c
+--- a/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c
++++ b/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c
+@@ -3299,6 +3299,18 @@ handle_wangateway(netsnmp_mib_handler *handler,
+     return SNMP_ERR_NOERROR;
+ }
+ 
++static char * nvram_list_fetch(char *name, int pos)
++{
++	char word[256], *next=NULL;
++
++	foreach(word, nvram_safe_get(name), next) {
++		if (pos-- == 0)
++			return word;
++	}
++
++	return NULL;
++}
++
+     int
+ handle_wandns(netsnmp_mib_handler *handler,
+         netsnmp_handler_registration *reginfo,
+@@ -3317,7 +3329,7 @@ handle_wandns(netsnmp_mib_handler *handler,
+     switch(reqinfo->mode) {
+ 
+         case MODE_GET:
+-            pval = nvram_safe_get("wan0_dns");
++            pval = nvram_list_fetch("wan0_dns", 0);
+             if(inet_aton(pval, &addr))
+             {
+                 snmp_set_var_typed_value(requests->requestvb, ASN_IPADDRESS,
+@@ -3362,7 +3374,7 @@ handle_wanseconddns(netsnmp_mib_handler *handler,
+     switch(reqinfo->mode) {
+ 
+         case MODE_GET:
+-            pval = nvram_safe_get("wan0_dns");
++            pval = nvram_list_fetch("wan0_dns",1);
+             if(inet_aton(pval, &addr))
+             {
+                 snmp_set_var_typed_value(requests->requestvb, ASN_IPADDRESS,
+@@ -3903,7 +3915,7 @@ handle_wanstaticdns(netsnmp_mib_handler *handler,
+     switch(reqinfo->mode) {
+ 
+         case MODE_GET:
+-            pval = nvram_safe_get("wan0_dns");
++            pval = nvram_list_fetch("wan0_dns", 0);
+             if(inet_aton(pval, &addr))
+             {
+                 snmp_set_var_typed_value(requests->requestvb, ASN_IPADDRESS,
+@@ -3999,7 +4011,7 @@ handle_wanstaticdns2(netsnmp_mib_handler *handler,
+     switch(reqinfo->mode) {
+ 
+         case MODE_GET:
+-            pval = nvram_safe_get("wan0_dns");
++            pval = nvram_list_fetch("wan0_dns", 1);
+             if(inet_aton(pval, &addr))
+             {
+                 snmp_set_var_typed_value(requests->requestvb, ASN_IPADDRESS,

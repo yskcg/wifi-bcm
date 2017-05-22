@@ -1,0 +1,141 @@
+--- a/src/include/bcmparams.h
++++ b/src/include/bcmparams.h
+@@ -20,7 +20,7 @@
+ #ifndef	_bcmparams_h_
+ #define	_bcmparams_h_
+ 
+-#define VLAN_MAXVID	15	/* Max. VLAN ID supported/allowed */
++#define VLAN_MAXVID	200	/* Max. VLAN ID supported/allowed */
+ 
+ #define VLAN_NUMPRIS	8	/* # of prio, start from 0 */
+ 
+--- a/src/router/rc/network.c
++++ b/src/router/rc/network.c
+@@ -836,11 +836,11 @@ void
+ start_wanbr(void)
+ {
+     ifconfig("vlan2", IFUP, NULL, NULL);
+-    ifconfig("vlan4", IFUP, NULL, NULL);
++    ifconfig("vlan100", IFUP, NULL, NULL);
+     eval("brctl", "addbr", "br2");
+     eval("brctl", "setfd", "br2", "0");
+     eval("brctl", "addif", "br2", "vlan2");
+-    eval("brctl", "addif", "br2" ,"vlan4");
++    eval("brctl", "addif", "br2" ,"vlan100");
+     if(nvram_match("wl0.1_bss_enabled", "1"))
+     {
+         ifconfig("wl0.1", IFUP, NULL, NULL);
+@@ -854,10 +854,10 @@ void
+ stop_wanbr(void)
+ {
+     ifconfig("vlan2", 0, NULL, NULL);
+-    ifconfig("vlan4", 0, NULL, NULL);
++    ifconfig("vlan100", 0, NULL, NULL);
+     ifconfig("br2", 0, NULL, NULL);
+     eval("brctl", "delif", "br2", "vlan2");
+-    eval("brctl", "delif", "br2", "vlan4");
++    eval("brctl", "delif", "br2", "vlan100");
+     //if(nvram_match("wl0.1_bss_enabled", "1"))
+     {
+         ifconfig("wl0.1", 0, NULL, NULL);
+--- a/src/router/rc/rc.c
++++ b/src/router/rc/rc.c
+@@ -594,7 +594,7 @@ restore_defaults(void)
+ 	struct nvram_tuple vlan[] = {
+ #ifdef LW_CUST
+ 		{ "lan_ifname", "br0", 0 },
+-		{ "lan_ifnames", "vlan1 vlan3 eth1", 0 },
++		{ "lan_ifnames", "vlan1 vlan200 eth1", 0 },
+ 		{ "wan_ifname", "br2", 0 },
+ 		{ "wan_ifnames", "br2 wl0.1", 0 },
+ 		{ "lan1_ifname", "br1", 0 },
+@@ -1241,7 +1241,7 @@ main_loop(void)
+ 	restore_defaults();
+ 
+ #ifdef __CONFIG_NAT__
+-	/* Auto Bridge if neccessary */
++	/* Auto Bridge if neccessary */ 
+ 	if (!strcmp(nvram_safe_get("auto_bridge"), "1"))
+ 	{
+ 		auto_bridge();
+--- a/src/shared/bcmrobo.c
++++ b/src/shared/bcmrobo.c
+@@ -100,6 +100,7 @@
+ /* VLAN page registers */
+ #define REG_VLAN_CTRL0	0x00	/* VLAN Control 0 register */
+ #define REG_VLAN_CTRL1	0x01	/* VLAN Control 1 register */
++#define REG_VLAN_CTRL3	0x03	/* VLAN Control 3 register */
+ #define REG_VLAN_CTRL4	0x04	/* VLAN Control 4 register */
+ #define REG_VLAN_CTRL5	0x05	/* VLAN Control 5 register */
+ #define REG_VLAN_ACCESS	0x06	/* VLAN Table Access register */
+@@ -116,8 +117,7 @@
+ #define REG_VLAN_PTAG8	0x20	/* 539x: VLAN Default Port Tag register - IMP port */
+ #define REG_VLAN_PMAP	0x20	/* 5325: VLAN Priority Re-map register */
+ 
+-#define VLAN_NUMVLANS	16	/* # of VLANs */
+-
++#define VLAN_NUMVLANS	200	/* # of VLANs */
+ 
+ /* ARL/VLAN Table Access page registers */
+ #define REG_VTBL_CTRL		0x00	/* ARL Read/Write Control */
+@@ -947,6 +947,10 @@ bcm_robo_config_vlan(robo_info_t *robo, uint8 *mac_addr)
+ 		val8 |= (1 << 1);	/* enable RSV multicast V Tagging */
+ 	robo->ops->write_reg(robo, PAGE_VLAN, REG_VLAN_CTRL1, &val8, sizeof(val8));
+ 
++	robo->ops->read_reg(robo, PAGE_VLAN, REG_VLAN_CTRL3, &val8, sizeof(val8));
++	val8 |= (1 << 7);
++	robo->ops->write_reg(robo, PAGE_VLAN, REG_VLAN_CTRL3, &val8, sizeof(val8));
++
+ 	arl_entry[0] = mac_addr[5];
+ 	arl_entry[1] = mac_addr[4];
+ 	arl_entry[2] = mac_addr[3];
+@@ -991,7 +995,7 @@ bcm_robo_config_vlan(robo_info_t *robo, uint8 *mac_addr)
+ 
+ 	/* setup each vlan. max. 16 vlans. */
+ 	/* force vlan id to be equal to vlan number */
+-	for (vid = 0; vid < VLAN_NUMVLANS; vid ++) {
++	for (vid = 0; vid <= VLAN_NUMVLANS;) {
+ 		char vlanports[] = "vlanXXXXports";
+ 		char port[] = "XXXX", *ports, *next, *cur;
+ 		uint32 untag = 0;
+@@ -1168,6 +1172,24 @@ vlan_setup:
+ 			robo->ops->write_reg(robo, PAGE_VTBL, vtbla, &val8,
+ 			                     sizeof(val8));
+ 		}
++        switch(vid)
++        {
++            case 0:
++            case 1:
++                vid++;
++                break;
++            case 2:
++                vid = 100;
++                break;
++            case 100:
++                vid = 200;
++                break;
++            case 200:
++                vid = 201;
++                break;
++        }
+ 	}
+ 
+ 	if (robo->devid == DEVID5325) {
+--- a/src/shared/nvram/bcm95357nr2_p163.txt
++++ b/src/shared/nvram/bcm95357nr2_p163.txt
+@@ -62,10 +62,10 @@ vlan1hwname=et0
+ vlan1ports=2 3 4 5*
+ vlan2hwname=et0
+ vlan2ports=0 5
+-vlan3hwname=et0
+-vlan3ports=1t 5t
+-vlan4hwname=et0
+-vlan4ports=1t 5t
++vlan100hwname=et0
++vlan100ports=1t 5t
++vlan200hwname=et0
++vlan200ports=1t 5t
+ 
+ # Bootloader and OS glue
+ # landevs=vlan1 wl0 vlan3
+

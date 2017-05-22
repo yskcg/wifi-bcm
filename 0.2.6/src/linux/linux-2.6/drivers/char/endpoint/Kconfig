@@ -1,0 +1,12 @@
+menu "Broadcom VoIP Endpoint Driver"
+
+config  BCM_ENDPOINT
+	tristate "Broadcom VoIP endpint driver"
+	select BCM_ENDPOINTDRV
+
+config BCM_ENDPOINTDRV
+	bool "Config Broadcom VoIP Endpoint Driver"
+	depends on BCM_ENDPOINT
+
+
+endmenu

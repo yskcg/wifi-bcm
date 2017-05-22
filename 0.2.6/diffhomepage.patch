@@ -1,0 +1,62 @@
+ src/router/httpd/httpd.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
+diff a/src/router/httpd/httpd.c b/src/router/httpd/httpd.c
+--- a/src/router/httpd/httpd.c
++++ b/src/router/httpd/httpd.c
+@@ -76,6 +76,12 @@ static char auth_userid[AUTH_MAX];
+ static char auth_passwd[AUTH_MAX];
+ static char auth_realm[AUTH_MAX];
+ 
++#define FROM_PC 0
++#define FROM_STB 1
++#define STB_ADDR "192.168.200.2"
++
++static int clienttype;
++
+ extern int internal_init(void);
+ 
+ /* Forwards. */
+@@ -558,8 +564,12 @@ handle_request(void)
+ 	send_error( 400, "Bad Request", (char*) 0, "Illegal filename." );
+ 	return;
+     }
+-    if ( file[0] == '\0' || file[len-1] == '/' )
+-	file = "index.asp";
++    if ( file[0] == '\0' || file[len-1] == '/' ){
++        if(clienttype == FROM_STB)
++            file = "basicset.asp";
++        else 
++            file = "index.asp";
++    }
+ 
+     for (handler = &mime_handlers[0]; handler->pattern; handler++) {
+ 	    if (match(handler->pattern, file)) {
+@@ -615,7 +625,9 @@ int main(int argc, char **argv)
+ 	usockaddr usa;
+ 	int listen_fd;
+ 	int conn_fd;
++    struct in_addr stbaddr;
+ 
++    inet_aton(STB_ADDR, &stbaddr);
+ 	socklen_t sz = sizeof(usa);
+ 
+ 	/* Ignore broken pipes */
+@@ -664,6 +676,15 @@ int main(int argc, char **argv)
+ 			perror("fdopen");
+ 			return errno;
+ 		}
++
++        if(usa.sa.sa_family == AF_INET){
++            struct sockaddr_in *claddr = (struct sockaddr_in *) &(usa.sa);
++            if(claddr->sin_addr.s_addr == stbaddr.s_addr)
++                clienttype = FROM_STB;
++            else 
++                clienttype = FROM_PC;
++        }
++
+ 		handle_request();
+ 		fflush(conn_fp);
+ 		fclose(conn_fp);
+-- 
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>快速设置页面</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="../script/jquery-3.1.0.min.js"></script>
+    <script src="../script/common/common.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-header clearfix">
+        <div class="header-brand">
+            <a href="javascript:void(0);">
+                <img src="../images/gx_logo.png" class="logo" alt="logo">
+            </a>
+        </div>
+        <div class="nav-box clearfix">
+            <ul class="nav navbar">
+                <li class="active">
+                    <a href="javascript:void(0);">
+                        <img src="../images/wifi_set.png" alt="wifi"/>
+                        <span>快速设置</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../html/netState.html">
+                        <img src="../images/net_state.png" alt="i" />
+                        <span>网络状态</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../html/professionSet.html">
+                        <img src="../images/pro_set.png" alt="i" />
+                        <span>专业设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-wrapper pd">
+        <div class="page-content page-content-white">
+            <form class="form-horizontal">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="title">无线设置</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-content">
+                            <div class="form-group">
+                                <label class="control-label">无线名称：</label>
+                                <div class="input-box">
+                                    <input type="text" class="input" placeholder="WI-FI名称" />
+                                </div>
+                                <div class="switch-box switch-blue">
+                                    <div class="switch-label wifi_open_colse">
+                                        <input type="checkbox" id="wifi_switch" checked value="true" />
+                                        <label for="wifi_switch" class="mui-switch mui-switch-anim"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">无线密码：</label>
+                                <div class="input-box">
+                                    <input type="text" class="input" id="pwd_input" placeholder="WI-FI密码" />
+                                </div>
+                                <div class="switch-box switch-blue">
+                                    <div class="switch-label wifi_pwd" id="pwd_switch">
+                                        <input type="checkbox" id="pwd_input_switch" value="true"/>
+                                        <label for="pwd_input_switch" class="mui-switch mui-switch-anim"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn-box">
+                                    <button type="submit" class="btn btn-primary ">应用</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="title">无线拓展<span class="sec-title">与WiFi接力棒进行配对以进行无线扩展</span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-content">
+                            <div class="form-group">
+                                <label class="control-label">匹配状态：</label>
+                                <div class="input-box">
+                                    <input type="text" class="input" placeholder="正在配对中……" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn-box">
+                                    <button type="submit" class="btn btn-primary">开始配对</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="title">系统管理</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-content">
+                            <div class="form-group">
+                                <div class="btn-box">
+                                    <button type="submit" class="btn btn-primary">恢复出厂设置</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn-box">
+                                    <button type="submit" class="btn btn-primary">重启路由器</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="page-footer">
+        <p class="text-center">
+            <label>硬件版本：</label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+            <label>
+                软件版本
+            </label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

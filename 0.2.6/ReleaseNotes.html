@@ -1,0 +1,1032 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Broadcom Embedded WAN Agnostic Residential Gateway Embedded System Release Notes</TITLE><!-- Copyright 2001-2010, Broadcom Corporation $ --><!-- $Id: ReleaseNotesRouter.html,v 1.51.22.2 2010-12-16 00:13:45 scottw Exp $ -->
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<STYLE>BODY {
+	FONT-FAMILY: Arial
+}
+H1 {
+	COLOR: black; FONT-FAMILY: Arial
+}
+H2 {
+	COLOR: black; FONT-FAMILY: Arial
+}
+H3 {
+	COLOR: black; FONT-FAMILY: Arial
+}
+H4 {
+	COLOR: black; FONT-STYLE: italic; FONT-FAMILY: Arial
+}
+UL {
+	FONT-SIZE: 12pt; FONT-FAMILY: Arial
+}
+P {
+	FONT-SIZE: 12pt; FONT-FAMILY: Arial
+}
+TD {
+	FONT-SIZE: 12pt; FONT-FAMILY: Arial
+}
+OL {
+	FONT-SIZE: 12pt; FONT-FAMILY: Arial
+}
+</STYLE>
+
+<META content="Microsoft FrontPage 4.0" name=GENERATOR><style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.xl22, li.xl22, div.xl22
+	{mso-style-name:xl22;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl23, li.xl23, div.xl23
+	{mso-style-name:xl23;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl24, li.xl24, div.xl24
+	{mso-style-name:xl24;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl25, li.xl25, div.xl25
+	{mso-style-name:xl25;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl26, li.xl26, div.xl26
+	{mso-style-name:xl26;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl27, li.xl27, div.xl27
+	{mso-style-name:xl27;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl28, li.xl28, div.xl28
+	{mso-style-name:xl28;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl29, li.xl29, div.xl29
+	{mso-style-name:xl29;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl30, li.xl30, div.xl30
+	{mso-style-name:xl30;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.xl31, li.xl31, div.xl31
+	{mso-style-name:xl31;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:green;
+	font-weight:bold;}
+p.xl32, li.xl32, div.xl32
+	{mso-style-name:xl32;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl33, li.xl33, div.xl33
+	{mso-style-name:xl33;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;}
+p.xl34, li.xl34, div.xl34
+	{mso-style-name:xl34;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.xl35, li.xl35, div.xl35
+	{mso-style-name:xl35;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.xl36, li.xl36, div.xl36
+	{mso-style-name:xl36;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:#993300;
+	font-weight:bold;}
+p.xl37, li.xl37, div.xl37
+	{mso-style-name:xl37;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:green;
+	font-weight:bold;}
+p.xl38, li.xl38, div.xl38
+	{mso-style-name:xl38;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:#993300;
+	font-weight:bold;}
+p.xl39, li.xl39, div.xl39
+	{mso-style-name:xl39;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:green;
+	font-weight:bold;}
+p.xl40, li.xl40, div.xl40
+	{mso-style-name:xl40;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.xl41, li.xl41, div.xl41
+	{mso-style-name:xl41;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:green;
+	font-weight:bold;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=FrontPage.Editor.Document>
+<meta name=Generator content="Microsoft FrontPage 4.0">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./foo_files/filelist.xml">
+<title>WECA WPA AP TEST CONFIGURATIONS</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>mdi</o:Author>
+  <o:LastAuthor>mdi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Created>2003-07-15T05:25:00Z</o:Created>
+  <o:LastSaved>2003-07-15T05:26:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>845</o:Words>
+  <o:Characters>4817</o:Characters>
+  <o:Company>Silicon Spice</o:Company>
+  <o:Lines>40</o:Lines>
+  <o:Paragraphs>9</o:Paragraphs>
+  <o:CharactersWithSpaces>5915</o:CharactersWithSpaces>
+  <o:Version>9.6926</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-charset:128;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-1 -369098753 63 0 4129023 0;}
+@font-face
+	{font-family:"\@Arial Unicode MS";
+	mso-font-charset:128;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-1 -369098753 63 0 4129023 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.xl24, li.xl24, div.xl24
+	{mso-style-name:xl24;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";}
+p.xl25, li.xl25, div.xl25
+	{mso-style-name:xl25;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl26, li.xl26, div.xl26
+	{mso-style-name:xl26;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl27, li.xl27, div.xl27
+	{mso-style-name:xl27;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:green;
+	font-weight:bold;}
+p.xl28, li.xl28, div.xl28
+	{mso-style-name:xl28;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl29, li.xl29, div.xl29
+	{mso-style-name:xl29;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl30, li.xl30, div.xl30
+	{mso-style-name:xl30;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-bottom-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl31, li.xl31, div.xl31
+	{mso-style-name:xl31;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#3366FF;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:green;
+	font-weight:bold;}
+p.xl32, li.xl32, div.xl32
+	{mso-style-name:xl32;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl33, li.xl33, div.xl33
+	{mso-style-name:xl33;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#7399BF;
+	mso-shading:#99CCFF;
+	mso-pattern:thin-horz-cross auto;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:green;
+	font-weight:bold;}
+p.xl34, li.xl34, div.xl34
+	{mso-style-name:xl34;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#33CCCC;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";}
+p.xl35, li.xl35, div.xl35
+	{mso-style-name:xl35;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:#33CCCC;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:green;
+	font-weight:bold;}
+p.xl36, li.xl36, div.xl36
+	{mso-style-name:xl36;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl37, li.xl37, div.xl37
+	{mso-style-name:xl37;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:green;
+	font-weight:bold;}
+p.xl38, li.xl38, div.xl38
+	{mso-style-name:xl38;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:#99CCFF;
+	border:none;
+	mso-border-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	font-weight:bold;}
+p.xl39, li.xl39, div.xl39
+	{mso-style-name:xl39;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-top-alt:solid white .5pt;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl40, li.xl40, div.xl40
+	{mso-style-name:xl40;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+p.xl41, li.xl41, div.xl41
+	{mso-style-name:xl41;
+	margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	background:navy;
+	border:none;
+	mso-border-left-alt:solid white .5pt;
+	mso-border-bottom-alt:solid white .5pt;
+	mso-border-right-alt:solid white .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Arial Unicode MS";
+	color:white;
+	font-weight:bold;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</HEAD>
+<BODY lang=EN-US style="tab-interval: .5in" vLink=#800080 link=#0000ff>
+<P><IMG src="../../../wiz/src/doc/BCMLogo.gif" width="200" height="98"></P>
+<H1><font face="Arial">Broadcom WAN Agnostic Residential Gateway<BR>Embedded
+System Source 
+
+
+<BR>Releases 5.110.x</font></H1>
+<P align=center><B><FONT color=red>Broadcom Corporation Confidential. For 
+evaluation use only.</FONT></B> </P>
+<HR SIZE=4>
+
+
+<h2>Notices&nbsp;</h2>
+
+<ul>
+  <ul>
+    <li>Customer shall (i) obtain all government approvals and registrations for
+      Customer's use of the software and (ii) comply with all applicable laws,
+      rules, and regulations in connection therewith (including, without
+      limitation, regulatory requirements under Title 47 CFR Part 15, Industry
+      Canada RSS-210, European Directive 1999/5/EC, and regulations related to
+      RF exposure). Customer understands and acknowledges that the software is
+      subject to all pertinent import and export laws of the United States.</li>
+    <li>CFE is the only supported boot loader&nbsp;</li>
+    <li>This package includes code used in SES from an SSL implementation written by Eric
+      Young. Please
+      note Eric Young's software includes the following restrictions:
+      <ul>
+        <li>
+          <p><font size="1">Copyright (C) 1995-1998 Eric Young <a href="mailto:(eay@cryptsoft.com">(eay@cryptsoft.com</a>)<br>
+          All rights reserved.<br>
+          This package is an SSL implementation written by Eric Young <a href="mailto:(eay@cryptsoft.com">(eay@cryptsoft.com</a>).<br>
+          Copyright remains Eric Young's, and as such any Copyright notices in
+      the code are not to be removed. If this package is used in a product, Eric
+      Young should be given attribution as the author of the parts of the
+      library used. This can be in the form of a textual message at program
+      startup or in documentation (online or textual) provided with the package.
+      Redistribution and use in source and binary forms, with or without
+      modification, are permitted provided that the following conditions are
+      met:</font></p>
+          <p><font size="1">1. Redistributions of source code must retain the copyright notice,
+      this list of conditions and the following disclaimer.</font></p>
+          <p><font size="1">2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.</font></p>
+          <p><font size="1">3. All advertising materials mentioning features or use of this
+      software must display the following acknowledgement:<br>
+          &quot;This product includes software written by Eric Young (eay@cryptsoft.com)&quot;</font></p>
+          <p><font size="1">4. If you include any Windows specific code (or a derivative thereof)
+      from the apps directory (application code) you must include an
+      acknowledgement:</font>
+          <ul>
+            <li><font size="1">&quot;<a href="mailto:This%20product%20includes%20software%20written%20by%20Tim%20Hudson%20(tjh@cryptsoft.com)">This product includes software written by Tim Hudson
+              (tjh@cryptsoft.com)</a>&quot;<br>
+              THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND ANY EXPRESS OR
+      IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+      OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+      NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+      INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+      (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+      SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+      LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+      OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+      SUCH DAMAGE.</font></li>
+          </ul>
+        </li>
+        <li><font size="1">The license and distribution terms for any publicly available version
+      or derivative of this code cannot be changed. i.e. this code cannot simply
+      be copied and put under another distribution license [including the GNU
+      Public License.]</font></li>
+      </ul>
+    </li>
+  </ul>
+</ul>
+
+
+
+<h2>What's New in Release 5.110.9?</h2>
+<ul>
+  <ul>
+    <li>Based on driver version 5.100.107 </li>
+    <li>CFE: Add a new clock combination : 530, 212, 106</li>
+    <li>CLM update for 3x3 - Create US/61 based on US/53 power levels </li>
+    <li>Rename some local variables to comply with shadow compiler warnings </li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.8?</h2>
+<ul>
+  <ul>
+    <li>Based on driver version 5.100.105 </li>
+    <li>Create US/63 (locales A6-8, An7-8) </li>
+    <li>Fix assert in AMPDU logic </li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.7?</h2>
+<ul>
+  <ul>
+    <li>Based on driver version 5.100.104 </li>
+    <li>Fixed CFE lock up issue if compiled with linux26 toolchain. </li>
+    <li>4331 Intel 6300 Performance Improvements </li>
+    <li>Create Q2/4 and EU/9 locales </li>
+    <li>Fix very low/limited throughput on A1 in some 4718+4331 designs</li>
+    <li>Initial 4706 SoC support </li>
+    <li>Enable EDCRS for AP based on 20/40 MHz. </li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.5?</h2>
+<ul>
+  <ul>
+    <li>Based on driver version 5.100.101 </li>
+    <li>New SROM fields for 4331</li>
+    <li>Fix some multicast reception issues</li>
+    <li>Interference mode 1 enabled for 5G for 43228</li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.4?</h2>
+<ul>
+  <ul>
+    <li>Based on driver version 5.100.96 </li>
+    <li>Initial 5357C0 support</li>
+    <li>Add support for new knoise and cca_txop metrics on recent 2x2 mimo chips </li>
+    <li>Add NAND flash boot support</li>
+    <li>Improved support for per antenna chain Tx power control</li>
+    <li>Updates for 43228 5GHz support</li>
+    <li>Fix driver update of STBC support after turning off an antenna</li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.3?</h2>
+<ul>
+  <ul>
+    <li>Based on driver version 5.100.83 </li>
+    <li>Fix 11g/11n protection states need to be BSS specific</li>
+    <li>Fix probe response leaking in multi chan/band setup</li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.2 / 5.110.1.4?</h2>
+<ul>
+  <ul>
+    <li>Equivelant to release 5.110.1.4 </li>
+    <li>Based on wl driver version 5.100.72. </li>
+    <li>Updated tuning for 43227 and 43228 </li>
+    <li>During down free the packets stuck in BC/MC Power Save Queue </li>
+    <li>Fix wl antdiv ioctl. </li>
+    <li>Enable Temperature Throttling for HTPHY </li>
+    <li>Initial support for 43227 and 43228. </li>
+    <li>Enhanced 43236 support </li>
+    <li>Fix 4321 failures </li>
+    <li>Fix late ACKs sent from 4313 </li>
+    <li>On 4313 fix VO traffic not steady enough in presence of VI </li>
+    <li>Merge radio pwrsave changes to 5.100 drver. </li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.1.3?</h2>
+<ul>
+  <ul>
+    <li>Based on wl driver version 5.100.49. </li>
+    <li>4331 only tx GF to other BRCM device  </li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.1.2?</h2>
+<ul>
+  <ul>
+  <li>Based on wl driver version 5.100.46. </li>
+  <li>Initial support for 43234 and 43362. </li>
+  <li>Fix maximum action frame size does not transmit. </li>
+  <li>Set txpwr local max to regulatory pub max for AP. </li>
+  <li>Disable BK aggregation for 4321. Enable it only on 471x. </li>
+  <li>Increase NRXBUFPOST to 64 for 4331. </li>
+  <li>Preliminary 43236B0 support. </li>
+  <li>4331B0 updates. </li>
+  <li>4313 tx power control enabled. </li>
+  </ul>
+</ul>
+
+<h2>What's New in Release 5.110.1.1?</h2>
+<ul>
+  <ul>
+  <li>Based on wl driver version 5.100.39. </li>
+  <li><b>Equivelent to release 5.70.50</b> (with new driver version). </li>
+  </ul>
+</ul>
+
+
+<H2>&nbsp;Support</H2>
+<UL>
+  <UL>
+    <LI>If you would like to report a bug, please go to our partner support site 
+    at http://support.broadcom.com, and select the "Product Cases" button once 
+    logged on with your company specific username/password provided to you by 
+    Broadcom. </LI></UL></UL>
+<HR SIZE=4>
+
+<P align=center>Copyright © 2001-2010 Broadcom Corporation</P>
+
+</body>
+
+</HTML>
+

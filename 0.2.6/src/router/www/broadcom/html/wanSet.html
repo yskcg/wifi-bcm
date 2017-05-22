@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>专业设置-运行状态</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="../script/jquery-3.1.0.min.js"></script>
+    <script src="../script/common/common.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-header clearfix">
+        <div class="header-brand">
+            <a href="javascript:void(0);">
+                <img src="../images/gx_logo.png" class="logo" alt="logo">
+            </a>
+        </div>
+        <div class="nav-box clearfix">
+            <ul class="nav navbar">
+                <li>
+                    <a href="../html/quickSet.html">
+                        <img src="../images/wifi_set.png" alt="wifi"/>
+                        <span>快速设置</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../html/netState.html">
+                        <img src="../images/net_state.png" alt="i" />
+                        <span>网络状态</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="javascript:void(0);">
+                        <img src="../images/pro_set.png" alt="i" />
+                        <span>专业设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-wrapper pd">
+        <div class="page-content clearfix">
+            <div class="page-nav tabs">
+                <ul class="el-menu el-menu-vertical-demo el-menu--dark">
+                    <li class="el-submenu is-opened">
+                        <div class="el-submenu__title">网络设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item is-active"><a href="../html/wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item"><a href="../html/lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item"><a href="../html/dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">无线设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">高级设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">系统管理
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-tabsContent">
+                <form class="form-horizontal">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">上网设置</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content">
+                                <div class="form-group select-group">
+                                    <label class="control-label">上网方式：</label>
+                                    <div class="input-box">
+                                        <select name="" class="input">
+                                            <option value="DHCP" selected>DHCP</option>
+                                        </select>
+                                        <div class="radio-box">
+                                            <label><input type="radio" name="test" />自动DNS</label>
+                                            <label><input type="radio" name="test" />手动DNS</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">DNS1：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" placeholder="DNS1" value="4.4.4.4" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">DNS2：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" placeholder="DNS2" value="8.8.8.8" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="btn-box">
+                                        <button type="submit" class="btn btn-primary">应用</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">MAC地址克隆
+                                <span class="sec-title">当前使用的MAC地址是
+                                    <span>F0:B4:29:54:7F:A8</span>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content">
+                                <div class="form-group">
+                                    <label class="control-label">MAC地址：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" value="34:17:EB:6A:64:AD" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="btn-box btn-box-width-auto">
+                                        <button type="submit" class="btn btn-primary">克&nbsp;&nbsp;&nbsp;&nbsp;隆</button>
+                                        <button type="submit" class="btn btn-primary">恢&nbsp;&nbsp;&nbsp;&nbsp;复</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">可选设置</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content">
+                                <div class="form-group">
+                                    <label class="control-label">主机名：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" readonly value="HiTV" />
+                                    </div>
+                                </div>
+                                <div class="form-group select-group">
+                                    <label class="control-label">MTU：</label>
+                                    <div class="input-box">
+                                        <select name="" id="" class="input">
+                                            <option>自动</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <p class="text-center">
+            <label>硬件版本：</label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+            <label>
+                软件版本
+            </label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

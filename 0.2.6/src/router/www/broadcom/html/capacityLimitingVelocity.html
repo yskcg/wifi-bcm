@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>专业设置-智能限速</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="../script/jquery-3.1.0.min.js"></script>
+    <script src="../script/common/common.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-header clearfix">
+        <div class="header-brand">
+            <a href="javascript:void(0);">
+                <img src="../images/gx_logo.png" class="logo" alt="logo">
+            </a>
+        </div>
+        <div class="nav-box clearfix">
+            <ul class="nav navbar">
+                <li>
+                    <a href="../html/quickSet.html">
+                        <img src="../images/wifi_set.png" alt="wifi"/>
+                        <span>快速设置</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../html/netState.html">
+                        <img src="../images/net_state.png" alt="i" />
+                        <span>网络状态</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="javascript:void(0);">
+                        <img src="../images/pro_set.png" alt="i" />
+                        <span>专业设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-wrapper pd">
+        <div class="page-content clearfix">
+            <div class="page-nav tabs">
+                <ul class="el-menu el-menu-vertical-demo el-menu--dark">
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">网络设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item" id="wan_set"><a href="../html/wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item" id="lan_set"><a href="../html/lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item" id="dhcp_set"><a href="../html/dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item" id="vlan_set"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">无线设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu is-opened">
+                        <div class="el-submenu__title">高级设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item is-active"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">系统管理
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-tabsContent">
+                <form class="form-horizontal">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">系统</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content form-col-2">
+                                <div class="form-group">
+                                    <label class="control-label">产品型号：</label>
+                                    <div class="input-box text-center">
+                                        三网融盒路由器V2版
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">发布时间：</label>
+                                    <div class="input-box text-center">
+                                        2014年12月16日 23:49:43
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">当前时间：</label>
+                                    <div class="input-box text-center">
+                                        2016年09月22日 15:57:48
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">运行时间：</label>
+                                    <div class="input-box text-center">
+                                        0日:7时:31分:56秒
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">硬件</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content form-col-2">
+                                <div class="form-group">
+                                    <label class="control-label">CPU型号：</label>
+                                    <div class="input-box text-center">
+                                        RTL8196C+8192ER
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">CPU频率：</label>
+                                    <div class="input-box text-center">
+                                        400MHz
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">当前CPU负载：</label>
+                                    <div class="input-box text-center">
+                                        10.58%
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">内存容量：</label>
+                                    <div class="input-box text-center">
+                                        64M
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">内存频率：</label>
+                                    <div class="input-box text-center">
+                                        800MHz（DDR2）
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">当前内存占用：</label>
+                                    <div class="input-box text-center">
+                                        41.00%
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">存储空间：</label>
+                                    <div class="input-box text-center">
+                                        8M
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">当前存储占用：</label>
+                                    <div class="input-box text-center">
+                                        60%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">网络</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content form-col-2">
+                                <div class="form-group">
+                                    <label class="control-label">实时下行流量：</label>
+                                    <div class="input-box text-center">
+                                        0.22KB/s
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">实时上行流量：</label>
+                                    <div class="input-box text-center">
+                                        1.23KB/s
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">总下载量：</label>
+                                    <div class="input-box text-center">
+                                        207.56MB
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">总上传量：</label>
+                                    <div class="input-box text-center">
+                                        30.63MB
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <p class="text-center">
+            <label>硬件版本：</label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+            <label>
+                软件版本
+            </label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

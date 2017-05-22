@@ -1,0 +1,5 @@
+agent_trap_all,libnetsnmpagent NSF_CO
+trap_vars_with_context,agent_trap_all NSF_CO
+remove_trap_session,agent_trap_all NSF_CO
+send_v3trap,netsnmp_unused NSF_CO
+send_trap_pdu,netsnmp_unused NSF_CO

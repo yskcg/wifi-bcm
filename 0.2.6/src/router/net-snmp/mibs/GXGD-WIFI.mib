@@ -1,0 +1,1380 @@
+--
+-- GXGD-WIFI.my
+-- Thursday, September 22, 2016 at 10:38:23
+--
+
+	GXGD-WIFI DEFINITIONS ::= BEGIN
+ 
+		IMPORTS
+			enterprises, TimeTicks, IpAddress, OBJECT-TYPE, MODULE-IDENTITY, 
+			OBJECT-IDENTITY			
+				FROM SNMPv2-SMI;
+	
+	
+		-- 1.3.6.1.4.1.46227.2
+		gxgdWiFiModule MODULE-IDENTITY 
+			LAST-UPDATED "201609161141Z"		-- September 16, 2016 at 11:41 GMT
+			ORGANIZATION 
+				"GXGD."
+			CONTACT-INFO 
+				"Contact-info."
+			DESCRIPTION 
+				"Description."
+			::= { gxgdRoot 2 }
+
+		
+	
+--
+-- Node definitions
+--
+	
+		-- 1.3.6.1.4.1.46227
+		gxgdRoot OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"The root of the OID sub-tree assigned to Company by the Internet Assigned Numbers Authority (IANA)"
+			::= { enterprises 46227 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2
+		gxgdBasicSettings OBJECT IDENTIFIER ::= { gxgdWiFiModule 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2.1
+		basicsettings OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { gxgdBasicSettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2.1.1
+		basicsettingsgroup OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { basicsettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2.1.1.1
+		loginusername OBJECT-TYPE
+			SYNTAX OCTET STRING (SIZE (0..16))
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { basicsettingsgroup 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2.1.1.2
+		loginpassword OBJECT-TYPE
+			SYNTAX OCTET STRING (SIZE (0..16))
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { basicsettingsgroup 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2.1.1.3
+		lanipaddress OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { basicsettingsgroup 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.2.1.1.4
+		lannetmask OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { basicsettingsgroup 4 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3
+		gxgdnetworksettings OBJECT IDENTIFIER ::= { gxgdWiFiModule 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1
+		networksettings OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { gxgdnetworksettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1
+		networksettingsgroup OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { networksettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.2
+		reset OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.3
+		factoryrestore OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.6
+		txpower OBJECT-TYPE
+			SYNTAX INTEGER (1..100)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 6 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.7
+		wifimode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				bg(1),
+				b(2),
+				g(3),
+				bgn(4),
+				n(5),
+				ac(6)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 7 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.8
+		channel OBJECT-TYPE
+			SYNTAX INTEGER (0..13)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 8 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9
+		wirelessTable OBJECT-TYPE
+			SYNTAX SEQUENCE OF WirelessEntry
+			MAX-ACCESS not-accessible
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 9 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1
+		wirelessEntry OBJECT-TYPE
+			SYNTAX WirelessEntry
+			MAX-ACCESS not-accessible
+			STATUS current
+			DESCRIPTION
+				"Description."
+			INDEX { ssidindex }
+			::= { wirelessTable 1 }
+
+		
+		WirelessEntry ::=
+			SEQUENCE { 
+				ssidwithoutheader
+					OCTET STRING,
+				isolation
+					INTEGER,
+				ssidbroadcast
+					INTEGER,
+				secmode
+					INTEGER,
+				passphrase
+					OCTET STRING,
+				maxsta
+					INTEGER,
+				encryptionmethod
+					INTEGER,
+				enabled
+					INTEGER,
+				macaddress
+					OCTET STRING,
+				headerchangable
+					INTEGER,
+				ssidheader
+					OCTET STRING,
+				ssidindex
+					INTEGER
+			 }
+
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.1
+		ssidwithoutheader OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.2
+		isolation OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.3
+		ssidbroadcast OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.4
+		secmode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				disabled(0),
+				wep(1),
+				wpapsk(2),
+				wpa2psk(3),
+				pskmixed(4)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 4 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.5
+		passphrase OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 5 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.6
+		maxsta OBJECT-TYPE
+			SYNTAX INTEGER
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 6 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.7
+		encryptionmethod OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				tkip(1),
+				aes(2),
+				tkipaes(3)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 7 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.8
+		enabled OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				enabled(1),
+				disabled(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 8 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.9
+		macaddress OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 9 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.10
+		headerchangable OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 10 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.11
+		ssidheader OBJECT-TYPE
+			SYNTAX OCTET STRING (SIZE (0..8))
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 11 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.9.1.12
+		ssidindex OBJECT-TYPE
+			SYNTAX INTEGER (0..4)
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { wirelessEntry 12 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.17
+		ssidnumber OBJECT-TYPE
+			SYNTAX INTEGER
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 17 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.21
+		applysettings OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				allsettings(1),
+				wifisettings(2),
+				wansettings(3)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 21 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.22
+		pppoeusername OBJECT-TYPE
+			SYNTAX OCTET STRING (SIZE(0..16))
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 22 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.23
+		pppoepassword OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 23 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.24
+		pppoeservicename OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 24 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.25
+		pppoeconnectionstatus OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				connected(0),
+				userdisconnect(1),
+				errorphylink(631),
+				isptimeout(678),
+				authfail(691),
+				restrictedloginhour(718),
+				errorunknow(720),
+				notenabledforinternet(769)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 25 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.27
+		pppoeon OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 27 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.28
+		wanon OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 28 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.30
+		wirelessmode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				ap(0),
+				client(1),
+				router(2),
+				repeater(3),
+				bridge(4)
+				}
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 30 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.31
+		pppoeconnectondemand OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				continues(0),
+				ondemand(1),
+				manual(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 31 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.33
+		pppoedisconnect OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 33 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.37
+		wpsenable OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 37 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.38
+		dhcpenable OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 38 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.39
+		dhcpaddresstart OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 39 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.40
+		dhcpaddressend OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 40 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.41
+		dhcpnetmask OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 41 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.42
+		dhcpgateway OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 42 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.43
+		dhcpleasetime OBJECT-TYPE
+			SYNTAX TimeTicks
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 43 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.44
+		wifibandwidth OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				band20M(0),
+				band40M(1),
+				auto(3)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 44 }
+
+		-- 1.3.6.1.4.1.46227.2.3.1.1.45
+		vlanenabled OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 45 }
+
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46
+		vlanTable OBJECT-TYPE
+			SYNTAX SEQUENCE OF vlanEntry
+			MAX-ACCESS not-accessible
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 46 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1
+		vlanEntry OBJECT-TYPE
+			SYNTAX vlanEntry
+			MAX-ACCESS not-accessible
+			STATUS current
+			DESCRIPTION
+				"Description."
+			INDEX { portnum }
+			::= { vlanTable 1 }
+
+		
+		vlanEntry ::=
+			SEQUENCE { 
+				port
+                    OCTET STRING,
+				enable
+					INTEGER,
+				mode
+					INTEGER,
+				fwdmode
+					INTEGER,
+				vlanmode
+					INTEGER,
+                vid
+					INTEGER,
+                priority
+					INTEGER,
+				frameencapmode
+					INTEGER,
+				portnum
+                    INTEGER
+			 }
+
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.1
+		port OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.2
+		enable OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.3
+		mode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				wanport(0),
+				lanport(1)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.4
+		fwdmode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				NAT(0),
+				Bridge(1)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 4 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.5
+		vlanmode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				UnTag(0),
+				Tag(1)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 5 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.6
+		vid OBJECT-TYPE
+			SYNTAX INTEGER (1..4090)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 6 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.7
+		priority OBJECT-TYPE
+			SYNTAX INTEGER (1..7)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 7 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.8
+		frameencapmode OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				Standard(0),
+				NotStandard(1)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 8 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.46.1.9
+		portnum OBJECT-TYPE
+			SYNTAX INTEGER (1..10)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vlanEntry 9 }
+
+
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47
+		vidTable OBJECT-TYPE
+			SYNTAX SEQUENCE OF vidEntry
+			MAX-ACCESS not-accessible
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { networksettingsgroup 47 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47.1
+		vidEntry OBJECT-TYPE
+			SYNTAX vidEntry
+			MAX-ACCESS not-accessible
+			STATUS current
+			DESCRIPTION
+				"Description."
+			INDEX { portnum }
+			::= { vidTable 1 }
+
+		
+		vidEntry ::=
+			SEQUENCE { 
+				port
+                    OCTET STRING,
+				enable
+					INTEGER,
+				natvid
+					INTEGER,
+				bridgevid
+					INTEGER,
+				portnum
+                    INTEGER
+			 }
+
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47.1.1
+		port OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vidEntry 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47.1.2
+		enable OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vidEntry 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47.1.3
+		natvid OBJECT-TYPE
+			SYNTAX INTEGER (1..4090)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vidEntry 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47.1.4
+		bridgevid OBJECT-TYPE
+			SYNTAX INTEGER (1..4090)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vidEntry 4 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.3.1.1.47.1.5
+		portnum OBJECT-TYPE
+			SYNTAX INTEGER (1..10)
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { vidEntry 5 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4
+		gxgdadvancedsettings OBJECT IDENTIFIER ::= { gxgdWiFiModule 4 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1
+		advancedsettings OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { gxgdadvancedsettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1
+		advancedsettingsgroup OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { advancedsettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.2
+		wanipaddress OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.3
+		wannetmask OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.4
+		wangateway OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 4 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.5
+		wandns OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 5 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.6
+		wanseconddns OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 6 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.7
+		wanconnectionstatus OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				connected(1),
+				unconnected(2),
+				conflictconnect(3)
+				}
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 7 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.8
+		wantype OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				static(1),
+				dhcp(2),
+				pppoe(3)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 8 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.17
+		wanmacaddress OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 17 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.18
+		lanmacaddress OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 18 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.19
+		wanstaticipaddress OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 19 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.20
+		wanstaticnetmask OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 20 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.21
+		wanstaticgateway OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 21 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.22
+		wanstaticdns OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 22 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.4.1.1.23
+		wanstaticdns2 OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { advancedsettingsgroup 23 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5
+		gxgdmiscsettings OBJECT IDENTIFIER ::= { gxgdWiFiModule 5 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1
+		miscsettings OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { gxgdmiscsettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.1
+		miscsettingsgroup OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { miscsettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.1.1
+		manufacture OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				unknow(0),
+				motorola(1),
+				thomson(2),
+				cisco(3),
+				radiotech(4),
+				chyali(5),
+				foxcom(6),
+				lanwang(7),
+				orientView(8),
+				jiuizhou(34),
+				skyworth(44),
+				coship(51)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { miscsettingsgroup 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.1.2
+		hardwaremodel OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { miscsettingsgroup 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.1.3
+		softwareversion OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-only
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { miscsettingsgroup 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.2
+		upgradingcontrol OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { miscsettings 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.2.1
+		upgradingstart OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { upgradingcontrol 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.2.2
+		rebootafterupgrading OBJECT-TYPE
+			SYNTAX INTEGER
+				{
+				true(1),
+				false(2)
+				}
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { upgradingcontrol 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.3
+		upgradingsettings OBJECT-IDENTITY
+			STATUS current
+			DESCRIPTION 
+				"Description."
+			::= { miscsettings 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.3.1
+		imagefilename OBJECT-TYPE
+			SYNTAX OCTET STRING
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { upgradingsettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.3.2
+		serverip OBJECT-TYPE
+			SYNTAX IpAddress
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { upgradingsettings 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.5.1.3.3
+		serverport OBJECT-TYPE
+			SYNTAX INTEGER
+			MAX-ACCESS read-write
+			STATUS current
+			DESCRIPTION
+				"Description."
+			::= { upgradingsettings 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.6
+		--gxgdvlansettings OBJECT IDENTIFIER ::= { gxgdWiFiModule 6 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.6.1
+		--vlansettings OBJECT-IDENTITY
+		--	STATUS current
+		--	DESCRIPTION 
+		--		"Description."
+		--	::= { gxgdvlansettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.6.1.1
+		--vlansettingsgroup OBJECT-IDENTITY
+		--	STATUS current
+		--	DESCRIPTION 
+		--		"Description."
+		--	::= { vlansettings 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.6.1.1.1
+		--vlanenabled OBJECT-TYPE
+		--	SYNTAX INTEGER
+		--		{
+		--		true(1),
+		--		false(2)
+		--		}
+		--	MAX-ACCESS read-write
+		--	STATUS current
+		--	DESCRIPTION
+		--		"Description."
+		--	::= { vlansettingsgroup 1 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.6.1.1.2
+		--bridgedvlanid OBJECT-TYPE
+		--	SYNTAX INTEGER (1..4096)
+		--	MAX-ACCESS read-write
+		--	STATUS current
+		--	DESCRIPTION
+		--		"Description."
+		--	::= { vlansettingsgroup 2 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.6.1.1.3
+		--natvlanid OBJECT-TYPE
+		--	SYNTAX INTEGER (1..4096)
+		--	MAX-ACCESS read-write
+		--	STATUS current
+		--	DESCRIPTION
+		--		"Description."
+		--	::= { vlansettingsgroup 3 }
+
+		
+		-- 1.3.6.1.4.1.46227.2.7
+		bluenetprivate OBJECT IDENTIFIER ::= { gxgdWiFiModule 7 }
+
+		-- 1.3.6.1.4.1.46227.2.7.1
+        dhcpclientTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF DhcpclientEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { bluenetprivate 1 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.1.1
+        dhcpclientEntry OBJECT-TYPE
+        SYNTAX DhcpclientEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+        "Description."
+        INDEX { clientindex }
+        ::= { dhcpclientTable 1 }
+
+
+        DhcpclientEntry ::=
+        SEQUENCE { 
+            clientindex
+                INTEGER,
+            clientmac
+                OCTET STRING,
+            clientip
+                IpAddress,
+            clientleasetime
+                TimeTicks
+        }
+
+		-- 1.3.6.1.4.1.46227.2.7.1.1.1
+        clientindex OBJECT-TYPE
+        SYNTAX INTEGER (1..200)
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { dhcpclientEntry 1 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.1.1.2
+        clientmac OBJECT-TYPE
+        SYNTAX OCTET STRING
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { dhcpclientEntry 2 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.1.1.3
+        clientip OBJECT-TYPE
+        SYNTAX IpAddress
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { dhcpclientEntry 3 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.1.1.4
+        clientleasetime OBJECT-TYPE
+        SYNTAX TimeTicks
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { dhcpclientEntry 4 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.2
+        wifistationTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF WifistationEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { bluenetprivate 2 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.2.1
+        wifistationEntry OBJECT-TYPE
+        SYNTAX WifistationEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+        "Description."
+        INDEX { stationindex }
+        ::= { wifistationTable 1 }
+
+
+        WifistationEntry ::=
+        SEQUENCE { 
+            stationindex
+                INTEGER,
+            stationmac
+                OCTET STRING,
+            assoctime
+                TimeTicks
+        }
+
+		-- 1.3.6.1.4.1.46227.2.7.2.1.1
+        stationindex OBJECT-TYPE
+        SYNTAX INTEGER (1..32)
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { wifistationEntry 1 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.2.1.2
+        stationmac OBJECT-TYPE
+        SYNTAX OCTET STRING
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { wifistationEntry 2 }
+
+
+		-- 1.3.6.1.4.1.46227.2.7.2.1.3
+        assoctime OBJECT-TYPE
+        SYNTAX TimeTicks
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+        "Description."
+        ::= { wifistationEntry 3 }
+
+	END
+
+--
+-- GXGD-WIFI.my
+--

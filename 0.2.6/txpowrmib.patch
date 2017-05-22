@@ -1,0 +1,73 @@
+diff --git a/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c b/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c
+--- a/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c
++++ b/src/router/net-snmp/agent/mibgroup/gxgdWiFiModule.c
+@@ -1172,6 +1172,40 @@ handle_factoryrestore(netsnmp_mib_handler *handler,
+     return SNMP_ERR_NOERROR;
+ }
+ 
++int gettxpower(void)
++{
++    FILE *fp;
++    char power[8];
++    int ipower = -1;
++
++    fp = popen("/usr/sbin/wl -i eth1 pwr_percent", "r");
++
++    if (fp != NULL) {
++        if(fgets(power, sizeof(power), fp) != NULL) {
++            ipower = atoi(power);
++        }
++    }
++
++    pclose(fp);
++
++    return ipower;
++}
++
++bool settxpower(int power)
++{
++    int ret = false;
++    char spower[8];
++
++    if(power < 0 || power > 100)
++        return false;
++
++    bzero(spower, sizeof(spower));
++    sprintf(spower, "%d", power);
++
++    eval("/usr/sbin/wl", "-i", "eth1", "pwr_percent", spower);
++    return true;
++}
++
+ int
+ handle_txpower(netsnmp_mib_handler *handler,
+                           netsnmp_handler_registration *reginfo,
+@@ -1191,13 +1225,14 @@ handle_txpower(netsnmp_mib_handler *handler,
+     switch(reqinfo->mode) {
+ 
+         case MODE_GET:
+-            pval = nvram_safe_get("wl0_txpower");
+-            if(!strcmp(pval, ""))
+-                txpower = atoi(pval);
++            txpower = gettxpower();
+ 
+             if(txpower > 0 && txpower < 100)
+                 snmp_set_var_typed_integer(requests->requestvb, ASN_INTEGER,
+                                      txpower);
++            else
++                snmp_set_var_typed_integer(requests->requestvb, ASN_INTEGER,
++                                     100);
+             break;
+ 
+         /*
+@@ -1233,9 +1268,7 @@ handle_txpower(netsnmp_mib_handler *handler,
+                 netsnmp_set_request_error(reqinfo, requests,SNMP_ERR_BADVALUE);
+             }
+             else{
+-                bzero(tmpbuf, sizeof(tmpbuf));
+-                snprintf(tmpbuf, sizeof(tmpbuf), "%d", txpower);
+-                nvram_set("wl0_txpower", tmpbuf);
++                settxpower(txpower);
+             }
+             break;
+ 

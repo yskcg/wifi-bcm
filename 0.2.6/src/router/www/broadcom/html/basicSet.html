@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>专业设置-基本设置</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="../script/jquery-3.1.0.min.js"></script>
+    <script src="../script/common/common.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-header clearfix">
+        <div class="header-brand">
+            <a href="javascript:void(0);">
+                <img src="../images/gx_logo.png" class="logo" alt="logo">
+            </a>
+        </div>
+        <div class="nav-box clearfix">
+            <ul class="nav navbar">
+                <li>
+                    <a href="../html/quickSet.html">
+                        <img src="../images/wifi_set.png" alt="wifi"/>
+                        <span>快速设置</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../html/netState.html">
+                        <img src="../images/net_state.png" alt="i" />
+                        <span>网络状态</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="javascript:void(0);">
+                        <img src="../images/pro_set.png" alt="i" />
+                        <span>专业设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-wrapper pd">
+        <div class="page-content clearfix">
+            <div class="page-nav tabs">
+                <ul class="el-menu el-menu-vertical-demo el-menu--dark">
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">网络设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item" id="wan_set"><a href="../html/wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item" id="lan_set"><a href="../html/lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item" id="dhcp_set"><a href="../html/dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item" id="vlan_set"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu is-opened">
+                        <div class="el-submenu__title">无线设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item is-active"><a href="../html/basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">高级设置
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                        </ul>
+                    </li>
+                    <li class="el-submenu">
+                        <div class="el-submenu__title">系统管理
+                            <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                        </div>
+                        <ul class="el-menu">
+                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-tabsContent">
+                <form class="form-horizontal">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">无线设置</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content">
+                                <div class="form-group">
+                                    <label class="control-label">无线模式：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">802.11b/g/n</option>
+                                            <option value="">802.11b/g/n</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">无线通道：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">信道13 - 2472MHz</option>
+                                            <option value="">信道13 - 2472MHz</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">信号功率：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">100%</option>
+                                            <option value="">90%</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">频道带宽：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">自动</option>
+                                            <option value="">手动</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="btn-box">
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">SSID1设置
+                                <div class="switch-label switch-samll">
+                                    <input type="checkbox" id="ssid1_switch" value="true"/>
+                                    <label for="ssid1_switch" class="mui-switch mui-switch-anim"></label>
+                                </div>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content">
+                                <div class="form-group">
+                                    <label class="control-label">运行模式：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">路由模式</option>
+                                            <option value="">路由模式1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">无线名称：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" value="HiTV_96335">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">认证方式：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">路由模式</option>
+                                            <option value="">路由模式1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">加密方式：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">路由模式</option>
+                                            <option value="">路由模式1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">无线密码：</label>
+                                    <div class="input-box">
+                                        <input type="password" class="input" value="******">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">无线广播：</label>
+                                    <div class="input-box">
+                                        <select class="input">
+                                            <option value="">开启广播</option>
+                                            <option value="">关闭广播</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">最大终端数：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" value="16">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="btn-box">
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">SSID2设置
+                                <div class="switch-label switch-samll">
+                                    <input type="checkbox" id="ssid2_switch" value="true"/>
+                                    <label for="ssid2_switch" class="mui-switch mui-switch-anim"></label>
+                                </div>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content form-col-2">
+                                <div class="form-content">
+                                    <div class="form-group">
+                                        <label class="control-label">运行模式：</label>
+                                        <div class="input-box">
+                                            <select class="input">
+                                                <option value="">路由模式</option>
+                                                <option value="">路由模式1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">无线名称：</label>
+                                        <div class="input-box">
+                                            <input type="text" class="input" value="HiTV_96335">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">认证方式：</label>
+                                        <div class="input-box">
+                                            <select class="input">
+                                                <option value="">路由模式</option>
+                                                <option value="">路由模式1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">加密方式：</label>
+                                        <div class="input-box">
+                                            <select class="input">
+                                                <option value="">路由模式</option>
+                                                <option value="">路由模式1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">无线密码：</label>
+                                        <div class="input-box">
+                                            <input type="password" class="input" value="******">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">无线广播：</label>
+                                        <div class="input-box">
+                                            <select class="input">
+                                                <option value="">开启广播</option>
+                                                <option value="">关闭广播</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">最大终端数：</label>
+                                        <div class="input-box">
+                                            <input type="text" class="input" value="16">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="btn-box">
+                                            <button type="submit" class="btn btn-primary">保存</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="title">无线终端列表</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-content" style="width: 650px;">
+                                <div class="table-box">
+                                    <table class="table" border="0" cellpadding="0" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>主机名</th>
+                                            <th>MAC地址</th>
+                                            <th>IP地址</th>
+                                            <th>模式</th>
+                                            <th>速率</th>
+                                            <th>发送</th>
+                                            <th>接收</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    andoroid
+                                                </td>
+                                                <td>F0:B4:29:54:7F:A8</td>
+                                                <td>192.168.200.100</td>
+                                                <td>802.11n</td>
+                                                <td>65Mbps</td>
+                                                <td>2.3MB</td>
+                                                <td>55MB</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    andoroid
+                                                </td>
+                                                <td>F0:B4:29:54:7F:A8</td>
+                                                <td>192.168.200.100</td>
+                                                <td>802.11n</td>
+                                                <td>65Mbps</td>
+                                                <td>2.3MB</td>
+                                                <td>55MB</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <p class="text-center">
+            <label>硬件版本：</label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+            <label>
+                软件版本
+            </label>
+            <span>
+            4.3.2.5.3.1
+        </span>
+        </p>
+    </div>
+</div>
+</body>
+</html>
