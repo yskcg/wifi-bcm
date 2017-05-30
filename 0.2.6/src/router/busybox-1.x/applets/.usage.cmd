@@ -1,4 +1,4 @@
-cmd_applets/usage := gcc -Wp,-MD,applets/.usage.d  -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer      -I/home/yangshaokun/work/ow/study_wifi/0.2.6/src/router/busybox-1.x/include -o applets/usage applets/usage.c  
+cmd_applets/usage := gcc -Wp,-MD,applets/.usage.d  -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer      -I/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/busybox-1.x/include -o applets/usage applets/usage.c  
 
 deps_applets/usage := \
   applets/usage.c \
@@ -44,7 +44,7 @@ deps_applets/usage := \
   /usr/include/x86_64-linux-gnu/bits/confname.h \
   /usr/include/getopt.h \
   /usr/include/x86_64-linux-gnu/bits/unistd.h \
-  /home/yangshaokun/work/ow/study_wifi/0.2.6/src/router/busybox-1.x/include/usage.h \
+  /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/busybox-1.x/include/usage.h \
     $(wildcard include/config/ture/adduser/to/group.h) \
     $(wildcard include/config/ktop.h) \
     $(wildcard include/config/inux.h) \
@@ -165,7 +165,7 @@ deps_applets/usage := \
     $(wildcard include/config/ture/xargs/support/confirmation.h) \
     $(wildcard include/config/ture/xargs/support/termopt.h) \
     $(wildcard include/config/ture/xargs/support/zero/term.h) \
-  /home/yangshaokun/work/ow/study_wifi/0.2.6/src/router/busybox-1.x/include/applets.h \
+  /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/busybox-1.x/include/applets.h \
     $(wildcard include/config/feature/verbose/usage.h) \
     $(wildcard include/config/ture/installer.h) \
     $(wildcard include/config/ture/suid.h) \

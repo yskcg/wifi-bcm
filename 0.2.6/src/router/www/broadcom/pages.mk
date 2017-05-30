@@ -1,0 +1,1 @@
+PAGES := style.css index.asp lan.asp wan.asp ssid.asp radio.asp security.asp firmware.asp pwps.asp wds.asp gxlogo.gif lw.js jquery-3.1.0.min.js  jquery.min.js circle-progress.min.js basicset.asp netstatus.asp passwordmanage.asp seniorset.asp stylewireless.css supermanager.asp wireless.asp wirelessseniorsettings.asp wirelessterminallist.asp wirelessbrigle.asp

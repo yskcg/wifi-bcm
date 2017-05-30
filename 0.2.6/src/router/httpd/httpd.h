@@ -46,6 +46,7 @@ extern void set_cgi(char *name, char *value);
 extern int count_cgi(void);
 extern int b64_decode( const char* str, unsigned char* space, int size );
 extern char *b64_encode( unsigned char *src ,int src_len, unsigned char* space, int space_len);
+extern void send_headers( int status, char* title, char* extra_header, char* mime_type );
 
 /* Regular file handler */
 extern void do_file(char *path, FILE *stream);

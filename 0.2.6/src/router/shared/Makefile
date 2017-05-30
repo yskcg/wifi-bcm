@@ -18,7 +18,7 @@
 # $Id: Makefile 255795 2011-04-27 05:30:02Z winniec $
 #
 
-include $(SRCBASE)/router/.config
+#include $(SRCBASE)/router/.config
 
 CFLAGS	+= -I. -I../httpd -I$(SRCBASE)/include -Wall
 ifeq ($(LINUXDIR), $(SRCBASE)/linux/linux-2.6)

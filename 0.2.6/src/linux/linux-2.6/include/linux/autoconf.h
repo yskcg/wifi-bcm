@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux kernel version: 2.6.22
- * Sat May 13 00:16:40 2017
+ * Tue May 23 00:35:22 2017
  */
 #define AUTOCONF_INCLUDED
 #define CONFIG_MTD_NFLASH 1

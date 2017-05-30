@@ -18,18 +18,18 @@
 
 #define	MOD_MINOR_VERSION	5
 
-#define	MOD_RC_NUMBER		22
+#define	MOD_RC_NUMBER		29
 
 #define	MOD_INCREMENTAL_NUMBER	0
 
 #define	MOD_BUILD_NUMBER	0
 
-#define	MOD_VERSION		2017, 5, 22, 0
+#define	MOD_VERSION		2017, 5, 29, 0
 
-#define	MOD_VERSION_NUM		0x00051600
+#define	MOD_VERSION_NUM		0x00051d00
 
 /* Driver Version String, ASCII, 32 chars max */
-#define	MOD_VERSION_STR		"2017.5.22.0"
-#define	MOD_ROUTER_VERSION_STR	"2017.5.22.0"
+#define	MOD_VERSION_STR		"2017.5.29.0"
+#define	MOD_ROUTER_VERSION_STR	"2017.5.29.0"
 
 #endif /* _version_h_ */

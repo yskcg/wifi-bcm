@@ -18,7 +18,7 @@
 # $Id: Makefile 280598 2011-08-30 10:30:59Z kenlo $
 #
 
-include $(TOP)/.config
+#include $(TOP)/.config
 
 ifeq ($(LINUXDIR), $(SRCBASE)/linux/linux-2.6)
 CFLAGS += -DLINUX26

@@ -95,7 +95,7 @@ static int initialize_listen_socket( usockaddr* usaP );
 static int auth_check( char* dirname, char* authorization );
 static void send_authenticate( char* realm );
 static void send_error( int status, char* title, char* extra_header, char* text );
-static void send_headers( int status, char* title, char* extra_header, char* mime_type );
+void send_headers( int status, char* title, char* extra_header, char* mime_type );
 
 static int match( const char* pattern, const char* string );
 static int match_one( const char* pattern, int patternlen, const char* string );
@@ -242,7 +242,7 @@ send_error( int status, char* title, char* extra_header, char* text )
     }
 
 
-static void
+void
 send_headers( int status, char* title, char* extra_header, char* mime_type )
     {
     time_t now;
@@ -486,6 +486,7 @@ handle_request(void)
     int len;
     struct mime_handler *handler;
     int cl = 0, flags;
+	char unauth_flag = 0;
 
     /* Initialize the request variables. */
     authorization = boundary = NULL;
@@ -575,17 +576,25 @@ handle_request(void)
         if(clienttype == FROM_STB)
             file = "basicset.asp";
         else 
-            file = "./html/basicSet.html";
+            file = "./html/index.html";
+			unauth_flag = 1;
     }
-
+	
     for (handler = &mime_handlers[0]; handler->pattern; handler++) {
 	    if (match(handler->pattern, file)) {
-		    if (handler->auth) {
+         	char shell_cmd[256] = {'\0'};
+			system("touch /tmp/log");
+         	sprintf(shell_cmd,"echo file:%s pattern:%s >>/tmp/log \n",file,handler->pattern);
+         	system(shell_cmd);
+    		printf("%s %d method:%s\n",__FUNCTION__,__LINE__,method); 
+		    if (handler->auth && unauth_flag == 0) {
+				printf("%s %d method:%s\n",__FUNCTION__,__LINE__,method);
 			    handler->auth(auth_userid, auth_passwd, auth_realm);
 			    if (!auth_check(auth_realm, authorization))
 				    return;
 		    }
 		    if (strcasecmp(method, "post") == 0 && !handler->input) {
+				printf("%s %d\n",__FUNCTION__,__LINE__);
 			    send_error(501, "Not Implemented", NULL, "That method is not implemented.");
 			    return;
 		    }			    

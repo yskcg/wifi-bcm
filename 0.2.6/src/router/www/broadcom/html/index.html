@@ -39,6 +39,26 @@
             width: 100%;
         }
     </style>
+
+        <script src="../script/jquery-3.1.0.min.js"></script>
+        <script src="../script/jquery.md5.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+                $("form").submit(function(e){
+                        $.post(
+                                "login.cgi",
+                                {
+                                        password: $.md5($("input[name='password']").val())
+                                },
+                                function(data,status) {
+                                        window.location.href = '../html/quickSet.html';
+                                }
+                        );
+                        return false;
+                });
+        });
+        </script>
+
 </head>
 <body>
     <div class="page">
@@ -55,9 +75,9 @@
                     <img src="../images/logo_text.png" alt="logo">
                 </div>
                 <div class="login-body">
-                    <form action="quickSet.html" class="form-horizontal" method="post">
+                    <form  action = "login.cgi" id= "login" class="form-horizontal" method ="POST" >
                         <div class="input-icon">
-                            <input class="input" type="password" placeholder="请输入路由器管理密码" />
+                            <input class="input" type="password" name="password" placeholder="请输入路由器管理密码" />
                             <button type="submit" class="input-btn"> > </button>
                         </div>
                     </form>
@@ -67,3 +87,4 @@
     </div>
 </body>
 </html>
+

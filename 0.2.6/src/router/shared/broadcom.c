@@ -12881,6 +12881,67 @@ do_upgrade_cgi(char *url, FILE *stream)
 		sys_reboot();
 }
 
+static void
+do_login_post(char *url, FILE *stream, int len, char *boundary)
+{
+	char buf[1024] = {'\0'};
+	int length;
+	char authinfo[500];
+	char * authpass = NULL;
+	char userid[AUTH_MAX] = {'\0'};
+	char passwd[AUTH_MAX] = {'\0'};
+	char realm[AUTH_MAX] = {'\0'}; 	
+
+	assert(url);
+	assert(stream);
+
+	ret_code = EINVAL;
+	
+	/* Skip boundary and headers */
+	while (len > 0) {
+		if (!fgets(buf, MIN(len + 1, sizeof(buf)), stream))
+			return;
+		len -= strlen(buf);
+		if (!strcmp(buf, "\n") || !strcmp(buf, "\r\n"))
+			break;
+	}
+	
+	fgets(buf,MIN(len+1,sizeof(buf)),stream);
+	
+	if (buf){
+		length = b64_decode(buf,(unsigned char *)authinfo,sizeof(authinfo));
+		authinfo[length] = '\0';
+		authpass = strchr(authinfo,'=');
+		printf("%s %d form data:%s\n",__FUNCTION__,__LINE__,authinfo);	
+		if ( authpass == (char*) 0 ) {
+			/* No colon?  Bogus auth info. */
+			ret_code = 1;
+			return 0;
+    	}
+		*authpass++ = '\0';
+		do_auth(userid,passwd,realm);	
+		if (strcmp(passwd,authpass) == 0){
+			ret_code = 0;
+		}
+	}
+
+	/* Slurp anything remaining in the request */
+	while (len--)
+		(void) fgetc(stream);
+
+}
+
+static void
+do_login_cgi(char *url,FILE *stream)
+{
+	assert(url);
+	assert(stream);
+	
+	if(ret_code ==0){
+		send_headers(200,"Ok","Set-Cookie: user=admin;passwd=123456",NULL);
+	}
+}
+
 #ifdef PLC
 static char hex2nible(char c)
 {
@@ -15446,6 +15507,8 @@ struct mime_handler mime_handlers[] = {
     {"stbwds.asp", "text/html", no_cache, do_apply_post, do_wds_asp, NULL},
     {"stb.asp", "text/html", no_cache, NULL, do_ej, stb_no_auth},
 #endif
+	{ "./html/index.html","text/html",no_cache,NULL,do_ej,NULL},
+	{ "./html/quickSet.html","text/html",no_cache,do_apply_post,do_ej,NULL},
 	{ "basicset.asp", "text/html", no_cache, do_apply_post, do_basicset_asp, NULL },
 	{ "seniorset.asp", "text/html", no_cache, NULL, do_ej, NULL },
 	{ "wirelessseniorsettings.asp", "text/html", no_cache, NULL, do_ej, NULL },
@@ -15462,6 +15525,7 @@ struct mime_handler mime_handlers[] = {
 	{ "**.jpg", "image/jpeg", NULL, NULL, do_file, stb_no_auth},
 	{ "**.png", "image/png", NULL, NULL, do_file, stb_no_auth},
 	{ "**.js", "text/javascript", NULL, NULL, do_file, stb_no_auth},
+	{ "login.cgi","text/html",no_cache,do_login_post,do_login_cgi,NULL},
 	{ "stbapply.cgi*", "text/html", no_cache, do_apply_post, do_apply_cgi, NULL },
 	{ "apply.cgi*", "text/html", no_cache, do_apply_post, do_apply_cgi, do_auth },
 	{ "upgrade.cgi*", "text/html", no_cache, do_upgrade_post, do_upgrade_cgi, do_auth },

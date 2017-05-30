@@ -112,7 +112,7 @@
                                     <div class="form-group">
                                         <label class="control-label">当前时间：</label>
                                         <div class="input-box text-center">
-                                            2016年09月22日 15:57:48
+                                            <% localtime(); %>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -133,13 +133,13 @@
                                     <div class="form-group">
                                         <label class="control-label">CPU型号：</label>
                                         <div class="input-box text-center">
-                                            RTL8196C+8192ER
+                                            <% nvram_get("cpu_type"); %>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">CPU频率：</label>
                                         <div class="input-box text-center">
-                                            400MHz
+                                            300 MHz
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -151,13 +151,13 @@
                                     <div class="form-group">
                                         <label class="control-label">内存容量：</label>
                                         <div class="input-box text-center">
-                                            64M
+                                            32M
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">内存频率：</label>
                                         <div class="input-box text-center">
-                                            800MHz（DDR2）
+                                            200MHz（DDR2）
                                         </div>
                                     </div>
                                     <div class="form-group">
