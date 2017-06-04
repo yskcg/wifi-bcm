@@ -1,8 +1,8 @@
-/* This file is auto generated, version 46 */
+/* This file is auto generated, version 56 */
 /*  PREEMPT */
 #define UTS_MACHINE "mips"
-#define UTS_VERSION "#46 PREEMPT Mon May 29 23:35:09 CST 2017"
-#define LINUX_COMPILE_TIME "23:35:09"
+#define UTS_VERSION "#56 PREEMPT Tue May 30 23:10:49 CST 2017"
+#define LINUX_COMPILE_TIME "23:10:49"
 #define LINUX_COMPILE_BY "yangshaokun"
 #define LINUX_COMPILE_HOST "server"
 #define LINUX_COMPILE_DOMAIN ""

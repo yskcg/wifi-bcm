@@ -94,12 +94,25 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 .input[disabled],.input[readonly],fieldset[disabled] .input{background-color:#eee;opacity:1}
 .input[disabled],fieldset[disabled] .input{cursor:not-allowed}
 /*error input tips*/
+/*error input tips*/
+.has-error{position: relative;}
 .has-error .input {
     border-color: #a94442;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 .has-error .input:focus{border-color:#843534;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483}
+.error-text{
+    display: none;
+    position: absolute;
+    top: -16px;
+    color:#a94442;
+    font-size: 12px;
+}
+.has-error .error-text{
+    display: block;
+}
+
 /*input icon btn*/
 .input-icon{
     position: relative;

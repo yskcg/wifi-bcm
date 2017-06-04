@@ -41,14 +41,13 @@
     </style>
 
         <script src="../script/jquery-3.1.0.min.js"></script>
-        <script src="../script/jquery.md5.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
                 $("form").submit(function(e){
                         $.post(
                                 "login.cgi",
                                 {
-                                        password: $.md5($("input[name='password']").val())
+                                        password: window.btoa($("input[name='password']").val())
                                 },
                                 function(data,status) {
                                         window.location.href = '../html/quickSet.html';

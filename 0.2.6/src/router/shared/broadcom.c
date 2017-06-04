@@ -12891,7 +12891,7 @@ do_login_post(char *url, FILE *stream, int len, char *boundary)
 	char userid[AUTH_MAX] = {'\0'};
 	char passwd[AUTH_MAX] = {'\0'};
 	char realm[AUTH_MAX] = {'\0'}; 	
-
+	char * p = NULL;
 	assert(url);
 	assert(stream);
 
@@ -12909,18 +12909,21 @@ do_login_post(char *url, FILE *stream, int len, char *boundary)
 	fgets(buf,MIN(len+1,sizeof(buf)),stream);
 	
 	if (buf){
-		length = b64_decode(buf,(unsigned char *)authinfo,sizeof(authinfo));
+		authpass = strchr(buf,'=');
+		printf("%s %d form data:%s,%s\n",__FUNCTION__,__LINE__,buf,authpass);
+		length = b64_decode(authpass,(unsigned char *)authinfo,sizeof(authinfo));
 		authinfo[length] = '\0';
-		authpass = strchr(authinfo,'=');
 		printf("%s %d form data:%s\n",__FUNCTION__,__LINE__,authinfo);	
-		if ( authpass == (char*) 0 ) {
+		p = &authinfo[0];
+		if ( p == (char*) 0 ) {
 			/* No colon?  Bogus auth info. */
 			ret_code = 1;
+			printf("%s %d\n",__FUNCTION__,__LINE__);
 			return 0;
     	}
-		*authpass++ = '\0';
 		do_auth(userid,passwd,realm);	
-		if (strcmp(passwd,authpass) == 0){
+		if (strcmp(passwd,p) == 0){
+			printf("%s %d\n",__FUNCTION__,__LINE__);
 			ret_code = 0;
 		}
 	}
@@ -12936,9 +12939,17 @@ do_login_cgi(char *url,FILE *stream)
 {
 	assert(url);
 	assert(stream);
-	
+	char domain[512] = {'\0'};
+	char buf[512] = {'\0'};
+
 	if(ret_code ==0){
-		send_headers(200,"Ok","Set-Cookie: user=admin;passwd=123456",NULL);
+		printf("%s %d\n",__FUNCTION__,__LINE__);
+		strcpy(domain,nvram_safe_get("lan_gateway"));
+		sprintf(buf,"set-cookie: user=admin; passwd=123456; domain=\"%s\"; Path=/; HttpOnly",domain);
+		send_headers(200,"Ok",buf,"text/html");
+	}else{
+		printf("%s %d\n",__FUNCTION__,__LINE__);
+		send_headers(400,"Bad Passwd",NULL,"text/html");
 	}
 }
 

@@ -72,4 +72,5 @@ TAGS*~
 git-src
 
 0.2.6/src/router/mipsel-uclibc/
+0.2.6/src/router/compressed/
 *.man

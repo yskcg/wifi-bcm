@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+CTYPE html>
 <html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,62 @@
     <link rel="stylesheet" href="../css/common.css" />
     <script src="../script/jquery-3.1.0.min.js"></script>
     <script src="../script/common/common.js"></script>
+    <script src="../script/validata.js"></script>
+
+    <script type="text/javascript">
+        $(document).on("click","#wifi_submit",function() {
+            var wifi_disable = $('#wifi_switch').prop('checked')
+            var wifi_encoce_disable = $('#pwd_input_switch').prop('checked')
+
+            if(wifi_disable){
+                //config the wireless
+                if (validate.length_6_32(document.getElementById("wifi_name"), "无线名称")) {
+                    if(wifi_encoce_disable){
+                        if (validate.length_6_32(document.getElementById("pwd_input"), "无线密码")) {
+                            $.post(
+                                "wireless_config.cgi",
+                                {
+                                    wifi_name:$("#wifi_name").val(),
+                                    password: $("#pwd_input").val()
+                                },
+                                function (data, status) {
+                                    console.log("success!");
+                                }
+                            );
+                        }
+                    }else{
+                        //no passwd of wireless
+                        $.post(
+                            "wireless_config.cgi",
+                            {
+                                wifi_name:$("#wifi_name").val(),
+                                password: "none"
+                            },
+                            function (data, status) {
+                                console.log("success!");
+                            }
+                        );
+                    }
+
+                }
+            }else{
+                //turn off the wireless
+                $.post(
+                    "wireless_disable.cgi",
+                    {
+                        wifi_disable:wifi_disable
+                    },
+                    function (data, status) {
+                        console.log("success!");
+                    }
+                );
+
+            }
+
+        });
+    </script>
+
+
 </head>
 <body>
 <div class="page">
@@ -25,13 +81,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../html/netState.html">
+                    <a href="netState.html">
                         <img src="../images/net_state.png" alt="i" />
                         <span>网络状态</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../html/professionSet.html">
+                    <a href="professionSet.html">
                         <img src="../images/pro_set.png" alt="i" />
                         <span>专业设置</span>
                     </a>
@@ -51,11 +107,11 @@
                             <div class="form-group">
                                 <label class="control-label">无线名称：</label>
                                 <div class="input-box">
-                                    <input type="text" class="input" placeholder="WI-FI名称" />
+                                    <input type="text" id="wifi_name" name="无线名称" class="input" placeholder="WI-FI名称" />
                                 </div>
                                 <div class="switch-box switch-blue">
                                     <div class="switch-label wifi_open_colse">
-                                        <input type="checkbox" id="wifi_switch" checked value="true" />
+                                        <input type="checkbox" id="wifi_switch" value="true" />
                                         <label for="wifi_switch" class="mui-switch mui-switch-anim"></label>
                                     </div>
                                 </div>
@@ -63,7 +119,7 @@
                             <div class="form-group">
                                 <label class="control-label">无线密码：</label>
                                 <div class="input-box">
-                                    <input type="text" class="input" id="pwd_input" placeholder="WI-FI密码" />
+                                    <input type="text" class="input" name="无线密码" id="pwd_input" placeholder="WI-FI密码" />
                                 </div>
                                 <div class="switch-box switch-blue">
                                     <div class="switch-label wifi_pwd" id="pwd_switch">
@@ -74,7 +130,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="btn-box">
-                                    <button type="submit" class="btn btn-primary ">应用</button>
+                                    <button type="button" id="wifi_submit" class="btn btn-primary ">应用</>
                                 </div>
                             </div>
                         </div>
@@ -139,3 +195,5 @@
 </div>
 </body>
 </html>
+
+
