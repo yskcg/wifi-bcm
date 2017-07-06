@@ -2,6 +2,7 @@
 /usr/bin/[[
 /sbin/arp
 /bin/ash
+/usr/bin/awk
 /usr/bin/basename
 /bin/cat
 /bin/chmod
@@ -59,6 +60,7 @@
 /bin/rmdir
 /sbin/rmmod
 /sbin/route
+/bin/sed
 /bin/sh
 /bin/sleep
 /sbin/sysctl

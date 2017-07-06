@@ -7,6 +7,48 @@
     <link rel="stylesheet" href="../css/common.css" />
     <script src="../script/jquery-3.1.0.min.js"></script>
     <script src="../script/common/common.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //config the lan network
+            $("#dhcp_submit").click(function () {
+                var dhcp_enable = $("#dhcp_switch").prop('checked');
+
+                if(dhcp_enable === false){
+                    return;
+                }
+
+                var dhcp_ip_start = $("#ip_end_left").text() + $("#ip_end_right").val();
+                var dhcp_ip_end = $("#ip_start_left").text() + $("#ip_start_right").val();
+                var dhcp_expires = $("#dhcp_expires").val()
+
+                $.post(
+                    "lan_config.cgi",
+                    {
+                        page:"lan.asp",
+                        num_lan_ifaces:"1",
+                        lan_ifname:"br0",
+                        lan_proto:"dhcp",
+                        lan_ipaddr:dhcp_ip_start,
+                        lan_netmask:"255.255.255.0",
+                        lan_gateway:dhcp_ip_start,
+                        dhcp_start:dhcp_ip_start,
+                        dhcp_end:dhcp_ip_end,
+                        lan_lease:dhcp_expires,
+                        action:"Apply"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+
+        });
+    </script>
+
+
 </head>
 <body>
 <div class="page">
@@ -19,13 +61,13 @@
         <div class="nav-box clearfix">
             <ul class="nav navbar">
                 <li>
-                    <a href="../html/quickSet.html">
+                    <a href="quickSet.html">
                         <img src="../images/wifi_set.png" alt="wifi"/>
                         <span>快速设置</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../html/netState.html">
+                    <a href="netState.html">
                         <img src="../images/net_state.png" alt="i" />
                         <span>网络状态</span>
                     </a>
@@ -48,10 +90,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/wanSet.html">WAN设置</a></li>
-                            <li class="el-menu-item"><a href="../html/lanSet.html">LAN设置</a></li>
-                            <li class="el-menu-item is-active"><a href="../html/dhcpSet.html">DHCP设置</a></li>
-                            <li class="el-menu-item"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                            <li class="el-menu-item"><a href="wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item"><a href="lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item is-active"><a href="dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item"><a href="vlanSet.html">VLAN设置</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -59,9 +101,9 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/basicSet.html">基本设置</a></li>
-                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
-                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                            <li class="el-menu-item"><a href="basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="wirelessFiltration.html">无线过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -69,10 +111,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
-                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
-                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
-                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                            <li class="el-menu-item"><a href="expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="safetyFilter.html">安全过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -80,10 +122,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
-                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
-                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
-                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                            <li class="el-menu-item"><a href="safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="professionSet.html">运行状态</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -94,7 +136,7 @@
                         <div class="panel-header">
                             <h3 class="title">DHCP服务器
                                 <div class="switch-label switch-samll">
-                                    <input type="checkbox" id="dhcp_switch" value="true"/>
+                                    <input type="checkbox" id="dhcp_switch" value="true" checked/>
                                     <label for="dhcp_switch" class="mui-switch mui-switch-anim"></label>
                                 </div>
                             </h3>
@@ -103,27 +145,25 @@
                             <div class="form-content">
                                 <div class="form-group">
                                     <label class="control-label">起始IP地址：</label>
-                                    <div class="input-box">
-                                        192.168.200.
-                                        <input type="text" value="100" class="input small-input" />
+                                    <div class="input-box" id="dhcp_start_ip3">
+                                        <span id="ip_start_left">192.168.200.</span><input id = "ip_start_right" type="text" class="input small-input" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">结束IP地址：</label>
-                                    <div class="input-box">
-                                        192.168.200.
-                                        <input type="text" value="100" class="input small-input" />
+                                    <div class="input-box" id="dhcp_end_ip3">
+                                        <span id="ip_end_left">192.168.200.</span><input id = "ip_end_right" type="text"  class="input small-input" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">租约时间（分）：</label>
                                     <div class="input-box">
-                                        <input type="text" class="input" value="720"/>
+                                        <input type="text" class="input" id="dhcp_expires"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="btn-box">
-                                        <button type="submit" class="btn btn-primary">应用</button>
+                                        <button type="submit" id="dhcp_submit" class="btn btn-primary">应用</button>
                                     </div>
                                 </div>
                             </div>
@@ -197,25 +237,11 @@
                                             <th>MAC地址</th>
                                             <th>分配IP地址</th>
                                             <th>租约过期</th>
+                                            <th>网络描述</th>
                                         </tr>
+                                        <% lan_leases(); %>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                andoroid
-                                            </td>
-                                            <td>F0:B4:29:54:7F:A8</td>
-                                            <td>192.168.200.100</td>
-                                            <td>11:00:23</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
 
-                                            </td>
-                                            <td>F0:B4:29:54:7F:A8</td>
-                                            <td>192.168.200.100</td>
-                                            <td>11:00:23</td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>

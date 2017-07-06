@@ -18,6 +18,64 @@
 #include "options.h"
 #include "leases.h"
 
+char char_to_data(const char ch)
+{
+    switch(ch){
+		case '0': return 0;
+		case '1': return 1;
+		case '2': return 2;
+		case '3': return 3;
+		case '4': return 4;
+		case '5': return 5;
+		case '6': return 6;
+		case '7': return 7;
+		case '8': return 8;
+		case '9': return 9;
+		case 'a':
+		case 'A': return 10;
+		case 'b':
+		case 'B': return 11;
+		case 'c':
+		case 'C': return 12;
+		case 'd':
+		case 'D': return 13;
+		case 'e':
+		case 'E': return 14;
+		case 'f':
+		case 'F': return 15;
+    }
+    return 0;
+}
+
+static void mac_string_to_value(unsigned char *mac,unsigned char *buf)
+{
+    int i;
+    int len;
+	unsigned char * p_temp = mac;
+
+	if(mac && buf){
+		len = strlen((const char *)mac);
+		for (i=0;i<(len-5)/2;i++){
+			//mach_len = sscanf((const char *)mac+i*3,"%2x",&buf[i]);
+
+			buf[i] = char_to_data(*p_temp++) * 16;
+			buf[i] += char_to_data(*p_temp++);
+			p_temp++;
+		}
+	}
+}
+
+static int is_ip(const char *str)
+{
+    struct in_addr addr;
+    int ret;
+
+		if (str == NULL)
+			return -1;
+    ret = inet_pton(AF_INET, str, &addr);
+    return ret;
+}
+
 /* on these functions, make sure you datatype matches */
 static int read_ip(char *line, void *arg)
 {
@@ -227,6 +285,9 @@ void write_leases(void)
 	time_t curr = time(0);
 	unsigned long lease_time;
 	
+	char shell_cmd[128] = {'\0'};
+	system("touch /tmp/log_dhcpd1");
+	
 	if (!(fp = fopen(server_config.lease_file, "w"))) {
 		LOG(LOG_ERR, "Unable to open %s for writing", server_config.lease_file);
 		return;
@@ -244,6 +305,14 @@ void write_leases(void)
 			fwrite(&(leases[i].yiaddr), 4, 1, fp);
 			fwrite(&lease_time, 4, 1, fp);
 			fwrite(leases[i].hostname, 64, 1, fp);
+			
+			sprintf(shell_cmd,"echo mac:%02x:%02x:%02x:%02x:%02x:%02x\n >>/tmp/log_dhcpd1 \n",leases[i].chaddr[0]&0xff,leases[i].chaddr[1]&0xff,leases[i].chaddr[2]&0xff,\
+					leases[i].chaddr[3]&0xff,leases[i].chaddr[4]&0xff,leases[i].chaddr[5]&0xff);
+			system(shell_cmd);
+			memset(shell_cmd,0,sizeof(shell_cmd));
+			sprintf(shell_cmd,"echo ip:%d\n>>/tmp/log_dhcpd",leases[i].yiaddr);
+			system(shell_cmd);
+
 		}
 	}
 	fclose(fp);
@@ -284,5 +353,78 @@ void read_leases(char *file)
 	DEBUG(LOG_INFO, "Read %d leases", i);
 	fclose(fp);
 }
-		
+
+void add_static_leases()
+{
+	unsigned int i = 1;
+	unsigned int static_num = 0;
+	char *static_ip_num = NULL;
+	char *static_ip_mac = NULL;
+	char *static_ip = NULL;
+	FILE *fp;
+
+	char key[64] = {'\0'};
+	char *p_value = NULL;
+	unsigned char mac[6] = {0};
+	u_int32_t ip_addr;
+	struct dhcpOfferedAddr lease, *oldest;
+
+	LOG(LOG_INFO, "udhcp %s %d\n", __FUNCTION__,__LINE__);
+	char shell_cmd[128] = {'\0'};
+	system("touch /tmp/log_dhcpd");
+
+	static_ip_num = nvram_safe_get("static_ip_num");
+	
+	if(static_ip_num == NULL){
+		return;
+	}
+	static_num = atoi(static_ip_num);
+	LOG(LOG_INFO, "udhcp %s %d static_num:%d\n", __FUNCTION__,__LINE__,static_num);
+	if(atoi(static_ip_num) >= server_config.max_leases){
+		return;
+	}
+
+	if (!(fp = fopen("/tmp/log_dhcpd", "w"))) {
+		return;
+	}
+	LOG(LOG_INFO, "udhcp %s %d\n", __FUNCTION__,__LINE__);
+	system(shell_cmd);
+	for(i = 1;i<=static_num;i++){
+		memset(mac,0,sizeof(mac));
+		/*get the mac address*/
+		memset(key,0,sizeof(key));
+		sprintf(key,"static_ip_mac%d",i);
+		p_value = NULL;
+		p_value = nvram_safe_get(key);
+		mac_string_to_value(p_value,mac);
+		memcpy(lease.chaddr,mac,6);
+		/*get the ip address*/
+		memset(key,0,sizeof(key));
+		sprintf(key,"static_ip%d",i);
+		p_value = NULL;
+		p_value = nvram_safe_get(key);
+		lease.yiaddr = inet_addr(p_value);
+		LOG(LOG_INFO, "udhcp %s %d mac:%02x:%02x:%02x:%02x:%02x:%02x ip:%u\n", __FUNCTION__,__LINE__,mac[0],mac[1],mac[2],mac[3],mac[4],mac[5],lease.yiaddr);
+		/*init the hostname*/
+		strcpy(lease.hostname,"static");
+		LOG(LOG_INFO, "udhcp %s %d start:%u end:%u act:%u\n", __FUNCTION__,__LINE__,ntohl(server_config.start),ntohl(server_config.end),ntohl(lease.yiaddr));
+		/* ADDME: is it a static lease */
+		if (ntohl(lease.yiaddr) >= ntohl(server_config.start) 
+		&&  ntohl(lease.yiaddr) <= ntohl(server_config.end) ){
+			lease.expires = ntohl(LEASE_TIME);
+			if (!server_config.remaining) lease.expires -= time(0);
+			if (!(oldest = add_lease(lease.chaddr, lease.yiaddr, lease.expires))) {
+				LOG(LOG_INFO,"add failed %\n");
+				break;
+			}
+			
+			oldest->flag = 1;
+			strncpy(oldest->hostname, lease.hostname, sizeof(oldest->hostname) - 1);
+			oldest->hostname[sizeof(oldest->hostname) - 1] = '\0';
+			i++;
+		}
+		i++;
+	}
+		fclose(fp);
+}	
 		

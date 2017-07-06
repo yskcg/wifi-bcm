@@ -1,2 +1,2 @@
-const char *builddate = "Tue May 30 23:13:04 CST 2017";
+const char *builddate = "Thu Jul  6 23:49:16 CST 2017";
 const char *builduser = "yangshaokun@server";

@@ -75,6 +75,7 @@ static FILE *conn_fp;
 static char auth_userid[AUTH_MAX];
 static char auth_passwd[AUTH_MAX];
 static char auth_realm[AUTH_MAX];
+static char unauth_flag = 0;
 
 #define FROM_PC 0
 #define FROM_STB 1
@@ -96,6 +97,7 @@ static int auth_check( char* dirname, char* authorization );
 static void send_authenticate( char* realm );
 static void send_error( int status, char* title, char* extra_header, char* text );
 void send_headers( int status, char* title, char* extra_header, char* mime_type );
+void do_file(char *path, FILE *stream);
 
 static int match( const char* pattern, const char* string );
 static int match_one( const char* pattern, int patternlen, const char* string );
@@ -183,52 +185,52 @@ initialize_listen_socket( usockaddr* usaP )
 
 static int
 auth_check( char* dirname, char* authorization )
-    {
+{
     char authinfo[500];
     char* authpass;
-    int l;
 
-    /* Is this directory unprotected? */
-    if ( !strlen(auth_passwd) )
-	/* Yes, let the request go through. */
-	return 1;
-
-    /* Basic authorization info? */
-    if ( !authorization || strncmp( authorization, "Basic ", 6 ) != 0 ) {
-	send_authenticate( dirname );
-	return 0;
-    }
-
-    /* Decode it. */
-    l = b64_decode( &(authorization[6]), (unsigned char *)authinfo, sizeof(authinfo) );
-    authinfo[l] = '\0';
-    /* Split into user and password. */
-    authpass = strchr( authinfo, ':' );
-    if ( authpass == (char*) 0 ) {
-	/* No colon?  Bogus auth info. */
-	send_authenticate( dirname );
-	return 0;
-    }
-    *authpass++ = '\0';
-
-    /* Is this the right user and password? */
-    if ( strcmp( auth_userid, authinfo ) == 0 && strcmp( auth_passwd, authpass ) == 0 )
-	return 1;
-
-    send_authenticate( dirname );
-    return 0;
-    }
+	if (auth_passwd == NULL){
+		return 1;
+	}
+	printf("%s %d auth:%s\n",__FUNCTION__,__LINE__,authorization);
+	if (!authorization){
+		send_authenticate( dirname );
+		printf("%s %d auth:%s\n",__FUNCTION__,__LINE__,authorization);
+		return 0;
+	}
+	authpass = strchr(authorization,"=");
+	printf("%s %d auth:%s\n",__FUNCTION__,__LINE__,authpass);
+	if (authpass == (char*) 0 ){
+		send_authenticate(dirname);
+		printf("%s %d auth:%s\n",__FUNCTION__,__LINE__,authpass);
+		return 0;
+	}else{
+		authpass = authpass+1;
+		if(strcmp(authpass,"1") == 0){
+			printf("%s %d auth:%s\n",__FUNCTION__,__LINE__,authpass);
+			return 1;
+		}else{
+			printf("%s %d auth:%s\n",__FUNCTION__,__LINE__,authpass);
+			send_authenticate( dirname );
+			return 0;
+		}
+	}
+}
 
 
 static void
 send_authenticate( char* realm )
-    {
+{
     char header[10000];
+	char path[256] = {'\0'};
+ 	char *ipaddr=NULL;
 
-    (void) snprintf(
-	header, sizeof(header), "WWW-Authenticate: Basic realm=\"%s\"", realm );
-    send_error( 401, "Unauthorized", header, "Authorization required." );
-    }
+	ipaddr = nvram_get("lan_ipaddr");
+	sprintf(path,"http://%s",ipaddr);
+	printf("%s %d path:%s\n",__FUNCTION__,__LINE__,path);
+    (void) snprintf(header, sizeof(header), "Location: %s", path);
+	send_headers(302,"Unauthorized",header,"text/html");
+}
 
 
 static void
@@ -486,7 +488,7 @@ handle_request(void)
     int len;
     struct mime_handler *handler;
     int cl = 0, flags;
-	char unauth_flag = 0;
+
 
     /* Initialize the request variables. */
     authorization = boundary = NULL;
@@ -528,9 +530,9 @@ handle_request(void)
 	if ( strcmp( cur, "\n" ) == 0 || strcmp( cur, "\r\n" ) == 0 ){
 	    break;
 	}
-	else if ( strncasecmp( cur, "Authorization:", 14 ) == 0 )
+	else if ( strncasecmp( cur, "Cookie:", 7 ) == 0 )
 	    {
-	    cp = &cur[14];
+	    cp = &cur[7];
 	    cp += strspn( cp, " \t" );
 	    authorization = cp;
 	    cur = cp + strlen(cp) + 1;
@@ -579,14 +581,16 @@ handle_request(void)
             file = "./html/index.html";
 			unauth_flag = 1;
     }
-	
+
+	printf("%s %d file:%s\n",__FUNCTION__,__LINE__,file);	
     for (handler = &mime_handlers[0]; handler->pattern; handler++) {
-	    if (match(handler->pattern, file)) {
+	    //printf("pattern:%s\n",handler->pattern);
+		if (match(handler->pattern, file)) {
          	char shell_cmd[256] = {'\0'};
 			system("touch /tmp/log");
          	sprintf(shell_cmd,"echo file:%s pattern:%s >>/tmp/log \n",file,handler->pattern);
          	system(shell_cmd);
-    		printf("%s %d method:%s\n",__FUNCTION__,__LINE__,method); 
+			printf("%s %d method:%s\n",__FUNCTION__,__LINE__,method);
 		    if (handler->auth && unauth_flag == 0) {
 				printf("%s %d method:%s\n",__FUNCTION__,__LINE__,method);
 			    handler->auth(auth_userid, auth_passwd, auth_realm);
@@ -594,7 +598,6 @@ handle_request(void)
 				    return;
 		    }
 		    if (strcasecmp(method, "post") == 0 && !handler->input) {
-				printf("%s %d\n",__FUNCTION__,__LINE__);
 			    send_error(501, "Not Implemented", NULL, "That method is not implemented.");
 			    return;
 		    }			    

@@ -7,6 +7,49 @@
     <link rel="stylesheet" href="../css/common.css" />
     <script src="../script/jquery-3.1.0.min.js"></script>
     <script src="../script/common/common.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("form").submit(function(e){
+                var old_passwd = $("#old_passwd").val();
+                var new_passwd = $("#new_passwd").val();
+                var confirm_passwd = $("#confirm_passwd").val();
+
+                var length = old_passwd.length;
+
+                if(length <=0){
+                    alert("输入原密码不能为空!");
+                    return false;
+                }
+
+                length = new_passwd.length;
+                if(length <=6){
+                    alert("输入新密码不能为空或者长度小于6!");
+                    return false;
+                }
+
+                if( new_passwd != confirm_passwd){
+                    alert("两次输入新密码不匹配!");
+                    return false;
+
+                }else{
+                    $.post(
+                        "change_passwd.cgi",
+                        {
+                            new_passwd: confirm_passwd,
+                            old_passwd:old_passwd,
+                        },
+                        function(data,status) {
+                            window.location.href = '../html/quickSet.html';
+                        }
+                    );
+                }
+
+                return false;
+            });
+        });
+    </script>
+
+
 </head>
 <body>
 <div class="page">
@@ -19,13 +62,13 @@
         <div class="nav-box clearfix">
             <ul class="nav navbar">
                 <li>
-                    <a href="../html/quickSet.html">
+                    <a href="quickSet.html">
                         <img src="../images/wifi_set.png" alt="wifi"/>
                         <span>快速设置</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../html/netState.html">
+                    <a href="netState.html">
                         <img src="../images/net_state.png" alt="i" />
                         <span>网络状态</span>
                     </a>
@@ -48,10 +91,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item" id="wan_set"><a href="../html/wanSet.html">WAN设置</a></li>
-                            <li class="el-menu-item" id="lan_set"><a href="../html/lanSet.html">LAN设置</a></li>
-                            <li class="el-menu-item" id="dhcp_set"><a href="../html/dhcpSet.html">DHCP设置</a></li>
-                            <li class="el-menu-item" id="vlan_set"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                            <li class="el-menu-item" id="wan_set"><a href="wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item" id="lan_set"><a href="lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item" id="dhcp_set"><a href="dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item" id="vlan_set"><a href="vlanSet.html">VLAN设置</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -59,9 +102,9 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/basicSet.html">基本设置</a></li>
-                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
-                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                            <li class="el-menu-item"><a href="basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="wirelessFiltration.html">无线过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -69,10 +112,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
-                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
-                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
-                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                            <li class="el-menu-item"><a href="expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="safetyFilter.html">安全过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu is-opened">
@@ -80,10 +123,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item is-active"><a href="../html/safetyInfo.html">安全中心</a></li>
-                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
-                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
-                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                            <li class="el-menu-item is-active"><a href="safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="professionSet.html">运行状态</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -99,19 +142,19 @@
                                 <div class="form-group">
                                     <label class="control-label">原密码：</label>
                                     <div class="input-box">
-                                        <input type="password" class="input" placeholder="请输入原密码"/>
+                                        <input type="password" class="input" id ="old_passwd" placeholder="请输入原密码"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">输入新密码：</label>
                                     <div class="input-box">
-                                        <input type="password" class="input" placeholder="请输入新密码"/>
+                                        <input type="password" class="input" id = "new_passwd" placeholder="请输入新密码"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">确认新密码：</label>
                                     <div class="input-box">
-                                        <input type="password" class="input" placeholder="请再次输入新密码"/>
+                                        <input type="password" class="input" id = "confirm_passwd" placeholder="请再次输入新密码"/>
                                     </div>
                                 </div>
                                 <div class="form-group">

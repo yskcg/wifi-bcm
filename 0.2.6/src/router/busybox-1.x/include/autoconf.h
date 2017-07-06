@@ -2,7 +2,7 @@
  * Automatically generated C config: don't edit
  * Busybox version: 1.7.2
  */
-#define AUTOCONF_TIMESTAMP "2017-05-30 23:12:47 CST"
+#define AUTOCONF_TIMESTAMP "2017-07-06 23:49:00 CST"
 
 #define CONFIG_HAVE_DOT_CONFIG 1
 #define ENABLE_HAVE_DOT_CONFIG 1
@@ -948,14 +948,14 @@
 /*
  * Editors
  */
-#undef CONFIG_AWK
-#define ENABLE_AWK 0
-#define USE_AWK(...)
-#define SKIP_AWK(...) __VA_ARGS__
-#undef CONFIG_FEATURE_AWK_MATH
-#define ENABLE_FEATURE_AWK_MATH 0
-#define USE_FEATURE_AWK_MATH(...)
-#define SKIP_FEATURE_AWK_MATH(...) __VA_ARGS__
+#define CONFIG_AWK 1
+#define ENABLE_AWK 1
+#define USE_AWK(...) __VA_ARGS__
+#define SKIP_AWK(...)
+#define CONFIG_FEATURE_AWK_MATH 1
+#define ENABLE_FEATURE_AWK_MATH 1
+#define USE_FEATURE_AWK_MATH(...) __VA_ARGS__
+#define SKIP_FEATURE_AWK_MATH(...)
 #undef CONFIG_CMP
 #define ENABLE_CMP 0
 #define USE_CMP(...)
@@ -984,10 +984,10 @@
 #define ENABLE_PATCH 0
 #define USE_PATCH(...)
 #define SKIP_PATCH(...) __VA_ARGS__
-#undef CONFIG_SED
-#define ENABLE_SED 0
-#define USE_SED(...)
-#define SKIP_SED(...) __VA_ARGS__
+#define CONFIG_SED 1
+#define ENABLE_SED 1
+#define USE_SED(...) __VA_ARGS__
+#define SKIP_SED(...)
 #define CONFIG_VI 1
 #define ENABLE_VI 1
 #define USE_VI(...) __VA_ARGS__

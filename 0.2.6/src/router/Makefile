@@ -271,7 +271,7 @@ obj-$(CONFIG_IPUTILS) += iputils
 obj-$(CONFIG_DHCPV6S) += dhcp6s
 obj-$(CONFIG_DHCPV6C) += dhcp6c
 
-#obj-y += tcpdump
+obj-y += tcpdump
 CFLAGS += -DLW_CUST
 #FW_VER ?= V9.9.9
 FW_VER ?= V1.0.2

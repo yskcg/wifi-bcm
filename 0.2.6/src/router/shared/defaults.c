@@ -35,7 +35,7 @@
 struct nvram_tuple router_defaults[] = {
 	/* OS parameters */
 	{ "os_name", "", 0 },			 /* OS name string */
-	{ "cpu_type","BCM53572+BCM3349",0},
+	{ "",},
 	{ "os_version", ROUTER_VERSION_STR, 0 }, /* OS revision */
 	{ "os_date", __DATE__, 0 },		 /* OS date */
 	{ "wl_version", EPI_VERSION_STR, 0 },	 /* OS revision */
@@ -92,6 +92,8 @@ struct nvram_tuple router_defaults[] = {
 	{ "lan_gateway", "192.168.200.1", 0 },	/* LAN gateway */
 	{ "lan_proto", "dhcp", 0 },		/* DHCP server [static|dhcp] */
 	{ "lan_wins", "", 0 },			/* x.x.x.x x.x.x.x ... */
+	{ "lan_domain", "", 0 },		/* LAN domain name */
+	{ "lan_domain", "", 0 },		/* LAN domain name */
 	{ "lan_domain", "", 0 },		/* LAN domain name */
 	{ "lan_lease", "28800", 0 },		/* LAN lease time in seconds */
 	{ "lan_stp", "1", 0 },			/* LAN spanning tree protocol */
@@ -597,6 +599,4 @@ nvram_default_get(const char *name)
 			return router_defaults[idx].value;
 		}
 	}
-
-	return NULL;
 }

@@ -7,8 +7,65 @@
     <link rel="stylesheet" href="../css/common.css" />
     <script src="../script/jquery-3.1.0.min.js"></script>
     <script src="../script/common/common.js"></script>
+
+    <script type="text/javascript">
+        function wan_proto_change()
+        {
+            var network_mode = $("#net_mode option:selected").val();
+            var network_dns_mode = $("#net_dns_mode input:checked").val();
+
+            if (network_mode == "static"){
+                $("#static_ip").show();
+                $("#static_gateway").show();
+                $("#static_mask").show();
+                $("#pppoe_user").hide();
+                $("#pppoe_passwd").hide();
+            }else if(network_mode =="pppoe"){
+                $("#pppoe_user").show();
+                $("#pppoe_passwd").show();
+                $("#static_ip").hide();
+                $("#static_gateway").hide();
+                $("#static_mask").hide();
+            }
+        }
+
+        $(document).ready(function() {
+            //config the network
+            $("#net_config").click(function () {
+                var network_mode = $("#net_mode option:selected").val();
+                var network_dns_mode = $("#net_dns_mode input:checked").val();
+
+                if (network_mode == "static"){
+                    $("#static_ip").show();
+                    $("#static_gateway").show();
+                    $("#static_mask").show();
+                }else if(network_mode =="PPPOE"){
+                    $("#pppoe_user").show();
+                    $("#pppoe_passwd").show();
+                }
+
+                if (network_dns_mode == "1"){
+                    //get the custom dns value
+                    dns1 = $("#dns1").val();
+                    dns2 = $("#dns2").val();
+                }
+
+                $.post(
+                    "network_config.cgi",
+                    {
+                        action: "Reboot"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+        });
+    </script>
 </head>
-<body>
+<body onLoad="wan_proto_change();">
 <div class="page">
     <div class="page-header clearfix">
         <div class="header-brand">
@@ -19,13 +76,13 @@
         <div class="nav-box clearfix">
             <ul class="nav navbar">
                 <li>
-                    <a href="../html/quickSet.html">
+                    <a href="quickSet.html">
                         <img src="../images/wifi_set.png" alt="wifi"/>
                         <span>快速设置</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../html/netState.html">
+                    <a href="netState.html">
                         <img src="../images/net_state.png" alt="i" />
                         <span>网络状态</span>
                     </a>
@@ -48,10 +105,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item is-active"><a href="../html/wanSet.html">WAN设置</a></li>
-                            <li class="el-menu-item"><a href="../html/lanSet.html">LAN设置</a></li>
-                            <li class="el-menu-item"><a href="../html/dhcpSet.html">DHCP设置</a></li>
-                            <li class="el-menu-item"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                            <li class="el-menu-item is-active"><a href="wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item"><a href="lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item"><a href="dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item"><a href="vlanSet.html">VLAN设置</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -59,9 +116,9 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/basicSet.html">基本设置</a></li>
-                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
-                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                            <li class="el-menu-item"><a href="basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="wirelessFiltration.html">无线过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -69,10 +126,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
-                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
-                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
-                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                            <li class="el-menu-item"><a href="expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="safetyFilter.html">安全过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -80,10 +137,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
-                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
-                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
-                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                            <li class="el-menu-item"><a href="safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="professionSet.html">运行状态</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -99,60 +156,77 @@
                                 <div class="form-group select-group">
                                     <label class="control-label">上网方式：</label>
                                     <div class="input-box">
-                                        <select name="" class="input">
-                                            <option value="DHCP" selected>DHCP</option>
+                                        <select name="" class="input" id="net_mode" onChange="wan_proto_change();">
+                                            <option value="dhcp" <% nvram_match("wan_proto", "dhcp", "selected"); %>>DHCP</option>
+                                            <option value="pppoe" <% nvram_match("wan_proto", "pppoe", "selected"); %>>PPPoE</option>
+                                            <option value="static" <% nvram_match("wan_proto", "static", "selected"); %>>静态分配</option>
                                         </select>
-                                        <div class="radio-box">
-                                            <label><input type="radio" name="test" />自动DNS</label>
-                                            <label><input type="radio" name="test" />手动DNS</label>
-                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id = "static_ip" style="display: none;">
+                                    <label class="control-label">IP地址：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input"   />
+                                    </div>
+                                </div>
+                                <div class="form-group"  id = "static_mask" style="display: none;">
+                                    <label class="control-label">子网掩码：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" />
+                                    </div>
+                                </div>
+                                <div class="form-group"  id = "static_gateway" style="display: none;">
+                                    <label class="control-label">默认网关：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group"  id = "pppoe_user" style="display: none;">
+                                    <label class="control-label">PPPOE帐号：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" />
+                                    </div>
+                                </div>
+                                <div class="form-group"  id = "pppoe_passwd" style="display: none;">
+                                    <label class="control-label">PPPOE密码：</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group select-group" >
+                                    <label class="control-label">&nbsp</label>
+                                    <div class="input-box" id = "net_dns_mode">
+                                        <label><input type="radio" name="test" value = "0" checked/>自动DNS</label>
+                                        <label><input type="radio" name="test" value = "1" />手动DNS</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">DNS1：</label>
                                     <div class="input-box">
-                                        <input type="text" class="input" placeholder="DNS1" value="4.4.4.4" readonly />
+                                        <input type="text" id = "dns1" class="input" placeholder="DNS1" value="114.114.114.114"  />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">DNS2：</label>
                                     <div class="input-box">
-                                        <input type="text" class="input" placeholder="DNS2" value="8.8.8.8" readonly />
+
+                                        <input type="text" class="input" id = "dns2" placeholder="DNS2" value="119.29.29.29"  />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="btn-box">
-                                        <button type="submit" class="btn btn-primary">应用</button>
+                                        <button type="submit" id = "net_config" class="btn btn-primary">应用</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="title">MAC地址克隆
-                                <span class="sec-title">当前使用的MAC地址是
-                                    <span>F0:B4:29:54:7F:A8</span>
-                                </span>
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-content">
-                                <div class="form-group">
-                                    <label class="control-label">MAC地址：</label>
-                                    <div class="input-box">
-                                        <input type="text" class="input" value="34:17:EB:6A:64:AD" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="btn-box btn-box-width-auto">
-                                        <button type="submit" class="btn btn-primary">克&nbsp;&nbsp;&nbsp;&nbsp;隆</button>
-                                        <button type="submit" class="btn btn-primary">恢&nbsp;&nbsp;&nbsp;&nbsp;复</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="panel">
                         <div class="panel-header">
                             <h3 class="title">可选设置</h3>

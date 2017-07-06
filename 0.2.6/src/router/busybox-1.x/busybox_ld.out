@@ -312,6 +312,8 @@ attempt to open coreutils/libcoreutils/lib.a succeeded
 attempt to open debianutils/lib.a succeeded
 attempt to open e2fsprogs/lib.a succeeded
 attempt to open editors/lib.a succeeded
+(editors/lib.a)awk.o
+(editors/lib.a)sed.o
 (editors/lib.a)vi.o
 attempt to open findutils/lib.a succeeded
 (findutils/lib.a)find.o
@@ -488,6 +490,10 @@ attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipse
 attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/libcrypt.a failed
 attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/../../../../mipsel-linux-uclibc/lib/libcrypt.so succeeded
 -lcrypt (/opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/../../../../mipsel-linux-uclibc/lib/libcrypt.so)
+attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/libm.so failed
+attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/libm.a failed
+attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/../../../../mipsel-linux-uclibc/lib/libm.so succeeded
+-lm (/opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/../../../../mipsel-linux-uclibc/lib/libm.so)
 attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/libgcc.so failed
 attempt to open /opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/libgcc.a succeeded
 (/opt/toolchains/hndtools-mipsel-linux-uclibc-4.2.3/lib/gcc/mipsel-linux-uclibc/4.2.3/libgcc.a)_lshrdi3.o

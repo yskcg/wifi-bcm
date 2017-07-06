@@ -9,6 +9,194 @@
     <script src="../script/common/common.js"></script>
 </head>
 <body>
+<script language="JavaScript" type="text/javascript">
+
+    function wl_status_recalc()
+    {
+        var ssid1_enable = $("#ssid1_enable").attr("value");
+        if(ssid1_enable=="1") {
+            document.getElementById('ssid1_enable').innerHTML = "启用";
+        } else {
+            document.getElementById('ssid1_enable').innerHTML = "关闭";
+        }
+        var ssid2_enable = $("#ssid2_enable").attr("value");
+        if(ssid2_enable=="1") {
+            document.getElementById('ssid2_enable').innerHTML = "启用";
+        } else {
+            document.getElementById('ssid2_enable').innerHTML = "关闭";
+        }
+
+        var wl1_idx =$("#ssid1_mode").attr("value");
+        var wl2_idx =$("#ssid2_mode").attr("value");
+        var wl_channel = "<% nvram_get("wl_channel"); %>";
+        var wl_cur_channel = "<% wl_cur_channel(); %>";
+        var wl_cur_mode = "<% wl0_phytype(); %>";
+
+        if (wl_cur_mode = "n"){
+            wl_cur_mode = "802.11bgn"
+        }else{
+            wl_cur_mode = "802.11"+wl_cur_mode;
+        }
+
+        if(wl2_idx == "1") {
+            var wl1_ssid = "<% nvram_get("wl0.1_ssid"); %>";
+            var wl1_hwaddr = "<% nvram_get("wl0.1_hwaddr"); %>";
+            $("#ssid2_name").text(wl1_ssid);
+            $("#ssid2_mode").text("桥接");
+            if (wl_channel == "0") {
+                var temp_start = "自动(";
+                var temp_end   = ")";
+                var wifi_channel = temp_start+wl_cur_channel+temp_end;
+                $("#ssid2_channel").text(wifi_channel);
+            } else {
+                $("#ssid2_channel").text(wl_cur_channel);
+            }
+
+            var temp_mode_start = "300M(";
+            var temp_mode_end = ")";
+            var wifi_mode = temp_mode_start + wl_cur_mode + temp_mode_end;
+            //$("ssid2_pro_mode").text(wifi_mode);
+            document.getElementById('ssid2_pro_mode').innerHTML = wifi_mode;
+            document.getElementById('ssid2_mac').innerHTML = wl1_hwaddr;
+        }
+
+        if(wl1_idx == "0") {
+            var wl0_ssid = "<% nvram_get("wl0_ssid"); %>";
+            var wl0_hwaddr = "<% nvram_get("wl0_hwaddr"); %>";
+            $("#ssid1_name").text(wl0_ssid);
+            $("#ssid1_mode").text("路由");
+
+            if (wl_channel == "0") {
+                var temp_start = "自动(";
+                var temp_end   = ")";
+                var wifi_channel = temp_start+wl_cur_channel+temp_end;
+                $("#ssid1_channel").text(wifi_channel);
+            } else {
+                $("#ssid1_channel").text(wl_cur_channel);
+            }
+
+            var temp_mode_start = "300M(";
+            var temp_mode_end = ")";
+            var wifi_mode = temp_mode_start + wl_cur_mode + temp_mode_end;
+            //$("ssid1_pro_mode").text(wifi_mode);
+            document.getElementById('ssid1_pro_mode').innerHTML = wifi_mode;
+            document.getElementById('ssid1_mac').innerHTML = wl0_hwaddr;
+        }
+    }
+
+    function wl_wan_status(){
+        var wan_mode ;
+        var wan_mac = "<% nvram_get("wan0_hwaddr"); %>";
+        var wan_ip = "<% nvram_get("wan0_ipaddr"); %>";
+        var wan_mask = "<% nvram_get("wan0_netmask"); %>";
+        var wan_gateway = "<% nvram_get("wan0_gateway"); %>";
+
+        wan_mode = "<% nvram_match("wan_proto", "dhcp", "1"); %>";
+        if (wan_mode == "1"){
+            wan_mode = "DHCP";
+        }else if("<% nvram_match("wan_proto", "pppoe", "1"); %>"){
+            wan_mode = "PPPOE";
+        }else if("<% nvram_match("wan_proto", "static", "1"); %>"){
+            wan_mode = "STATIC";
+        }
+
+        var connection_status = [
+            ['Ｎ/A','未知'],
+            ['Unknown','未知'],
+            ['Disconnected','断开'],
+            ['Connecting','连接中'],
+            ['Connected','已连接']
+        ];
+
+        var wan_link_status = "<% wan_link(); %>";
+        for(i = 0; i < 5; i++)
+        {
+            if(connection_status[i][0] == wan_link_status)
+                $("#wan_link_mode").text(wan_mode+connection_status[i][1]);
+        }
+
+        $("#wan_mac").text(wan_mac);
+        $("#wan_ip").text(wan_ip);
+        $("#wan_mask").text(wan_mask);
+        $("#wan_gateway").text(wan_gateway);
+    }
+
+    function wl_lan_status() {
+        var lan_mac = "<% nvram_get("lan_hwaddr"); %>";
+        var lan_ip = "<% nvram_get("lan_ipaddr"); %>";
+        var lan_mask = "<% nvram_get("lan_netmask"); %>";
+
+        $("#lan_mac").text(lan_mac);
+        $("#lan_ip").text(lan_ip);
+        $("#lan_mask").text(lan_mask);
+    }
+
+    $(document).ready(function(){
+        $("#wan_connect").click(function(){
+            var wan_mac = "<% nvram_get("wan_hwaddr"); %>";
+            var wan_mode ;
+
+            wan_mode = "<% nvram_match("wan_proto", "dhcp", "1"); %>";
+            if (wan_mode == "1"){
+                wan_mode = "dhcp";
+            }else if("<% nvram_match("wan_proto", "pppoe", "1"); %>"){
+                wan_mode = "pppoe";
+            }else if("<% nvram_match("wan_proto", "static", "1"); %>"){
+                wan_mode = "static";
+            }
+
+            $.post(
+                "wan_connect_action.cgi",
+                {
+                    wan_unit:0,
+                    wan_primary:1,
+                    wan_desc:"Default+Connection",
+                    wan_proto:"dhcp",
+                    wan_hwaddr:wan_mac,
+                    wan_dns:4,
+                    wan_wins:4,
+                    action:"Renew"
+                },
+                function (data, status) {
+                    location.reload();
+                    console.log("success!");
+                }
+            );
+        });
+
+        $("#wan_disconnect").click(function(){
+            var wan_mac = "<% nvram_get("wan_hwaddr"); %>";
+            var wan_mode ;
+
+            wan_mode = "<% nvram_match("wan_proto", "dhcp", "1"); %>";
+            if (wan_mode == "1"){
+                wan_mode = "dhcp";
+            }else if("<% nvram_match("wan_proto", "pppoe", "1"); %>"){
+                wan_mode = "pppoe";
+            }else if("<% nvram_match("wan_proto", "static", "1"); %>"){
+                wan_mode = "static";
+            }
+            $.post(
+                "wan_connect_action.cgi",
+                {
+                    wan_unit:0,
+                    wan_primary:1,
+                    wan_desc:"Default+Connection",
+                    wan_proto:wan_mode,
+                    wan_hwaddr:wan_mac,
+                    wan_dns:4,
+                    wan_wins:4,
+                    action:"Release"
+                },
+                function (data, status) {
+                    location.reload();
+                    console.log("success!");
+                }
+            );
+        })
+    });
+</script>
+<body onLoad="wl_status_recalc();wl_wan_status();wl_lan_status();">
 <div class="page">
     <div class="page-header clearfix">
         <div class="header-brand">
@@ -19,7 +207,7 @@
         <div class="nav-box clearfix">
             <ul class="nav navbar">
                 <li>
-                    <a href="../html/quickSet.html">
+                    <a href="quickSet.html">
                         <img src="../images/wifi_set.png" alt="wifi"/>
                         <span>快速设置</span>
                     </a>
@@ -31,7 +219,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../html/professionSet.html">
+                    <a href="professionSet.html">
                         <img src="../images/pro_set.png" alt="i" />
                         <span>专业设置</span>
                     </a>
@@ -60,55 +248,45 @@
                             <div class="form-group">
                                 <label class="control-label">无线功能：</label>
                                 <div class="input-box text-center">
-                                    启用
+                                    <p id="ssid1_enable" value = "<% nvram_get("wl0_bss_enabled"); %>"></p>
                                 </div>
                                 <div class="switch-box text-center">
-                                    关闭
+                                    <p id="ssid2_enable" value = "<% nvram_get("wl0.1_bss_enabled"); %>"></p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">运行模式：</label>
-                                <div class="input-box text-center">
-                                    路由模式
+                                <div class="input-box text-center" id="ssid1_mode" value="0">
                                 </div>
-                                <div class="switch-box text-center">
-                                    桥接模式
+                                <div class="switch-box text-center" id="ssid2_mode" value="1">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">无线模式：</label>
-                                <div class="input-box text-center">
-                                    300Mbps（802.11n）
+                                <div class="input-box text-center" id="ssid1_pro_mode">
                                 </div>
-                                <div class="switch-box text-center">
-                                    150Mbps（802.11n）
+                                <div class="switch-box text-center" id="ssid2_pro_mode">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">无线名称：</label>
-                                <div class="input-box text-center">
-                                    HiTV_96335
+                                <div class="input-box text-center" id="ssid1_name">
                                 </div>
-                                <div class="switch-box text-center">
-                                    HiTV
+                                <div class="switch-box text-center" id="ssid2_name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">无线信道：</label>
-                                <div class="input-box text-center">
-                                    自动（<span>9</span>）
+                                <div class="input-box text-center" id="ssid1_channel">
                                 </div>
-                                <div class="switch-box text-center">
-                                    自动（<span>3</span>）
+                                <div class="switch-box text-center" id="ssid2_channel">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">MAC地址：</label>
-                                <div class="input-box text-center">
-                                    A4:A8:0F:FA:01:40
+                                <div class="input-box text-center" id = "ssid1_mac">
                                 </div>
-                                <div class="switch-box text-center">
-                                    A4:A8:0F:FA:01:50
+                                <div class="switch-box text-center" id = "ssid2_mac">
                                 </div>
                             </div>
                         </div>
@@ -118,43 +296,30 @@
                     <div class="panel-header">
                         <h3 class="title">WAN状态</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" id = "wan_status">
                         <div class="form-content form-col-2">
                             <div class="form-group">
                                 <label class="control-label">连接状态：</label>
-                                <div class="input-box text-center">
-                                    DHCP已连接 [<a href="../html/javascript:void(0);">连接</a> | <a href="../html/javascript:void(0);"> 断开</a>]
+                                <div class="input-box text-center"  >
+                                    <span id = "wan_link_mode" > </span>
+                                    [<a id="wan_connect" href="javascript:void(0);">连接</a> | <a id="wan_disconnect" href="javascript:void(0);"> 断开</a>]
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">MAC地址：</label>
-                                <div class="input-box text-center">
-                                    A4:A8:0F:FA:01:3E
-                                </div>
+                                <div class="input-box text-center" id="wan_mac"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">IP地址：</label>
-                                <div class="input-box text-center">
-                                    10.49.64.108
-                                </div>
+                                <div class="input-box text-center" id="wan_ip"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">子网掩码：</label>
-                                <div class="input-box text-center">
-                                    255.255.255.0
-                                </div>
+                                <div class="input-box text-center" id="wan_mask"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">网关：</label>
-                                <div class="input-box text-center">
-                                    10.49.64.1
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">无线功能：</label>
-                                <div class="input-box text-center">
-                                    <span>219.232.82.68</span>、<span>219.232.84.100</span>
-                                </div>
+                                <div class="input-box text-center" id="wan_gateway"></div>
                             </div>
                         </div>
                     </div>
@@ -167,21 +332,15 @@
                         <div class="form-content form-col-2">
                             <div class="form-group">
                                 <label class="control-label">MAC地址：</label>
-                                <div class="input-box text-center">
-                                    A4:A8:0F:FA:01:3E
-                                </div>
+                                <div class="input-box text-center" id="lan_mac"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">IP地址：</label>
-                                <div class="input-box text-center">
-                                    10.49.64.108
-                                </div>
+                                <div class="input-box text-center" id="lan_ip"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">子网掩码：</label>
-                                <div class="input-box text-center">
-                                    255.255.255.0
-                                </div>
+                                <div class="input-box text-center" id="lan_mask"></div>
                             </div>
                         </div>
                     </div>

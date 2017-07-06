@@ -114,10 +114,14 @@ int main(int argc, char *argv[])
 	}
 	else server_config.lease = LEASE_TIME;
 	
+	LOG(LOG_INFO, "udhcp %s %d\n", __FUNCTION__,__LINE__);
 	leases = malloc(sizeof(struct dhcpOfferedAddr) * server_config.max_leases);
 	memset(leases, 0, sizeof(struct dhcpOfferedAddr) * server_config.max_leases);
 	read_leases(server_config.lease_file);
+	LOG(LOG_INFO, "udhcp %s %d\n", __FUNCTION__,__LINE__);
+	add_static_leases();
 
+	LOG(LOG_INFO, "udhcp %s %d\n", __FUNCTION__,__LINE__);
 	if (read_interface(server_config.interface, &server_config.ifindex,
 			   &server_config.server, server_config.arp) < 0)
 		exit_server(1);
@@ -134,6 +138,7 @@ int main(int argc, char *argv[])
 
 	socketpair(AF_UNIX, SOCK_STREAM, 0, signal_pipe);
 	signal(SIGUSR1, signal_handler);
+	signal(SIGUSR2, signal_handler);
 	signal(SIGTERM, signal_handler);
 
 	timeout_end = time(0) + server_config.auto_time;
@@ -177,6 +182,13 @@ int main(int argc, char *argv[])
 				/* why not just reset the timeout, eh */
 				timeout_end = time(0) + server_config.auto_time;
 				continue;
+			case SIGUSR2:
+				LOG(LOG_INFO, "Received a SIGUSR2");
+				add_static_leases();
+				/* why not just reset the timeout, eh */
+				timeout_end = time(0) + server_config.auto_time;
+				continue;
+
 			case SIGTERM:
 				LOG(LOG_INFO, "Received a SIGTERM");
 				exit_server(0);

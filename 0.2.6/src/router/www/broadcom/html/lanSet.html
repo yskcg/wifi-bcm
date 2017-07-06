@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="../css/common.css" />
     <script src="../script/jquery-3.1.0.min.js"></script>
     <script src="../script/common/common.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            //config the lan network
+            $("#lan_config").click(function () {
+                var lan_network_ip = $("#lan_ip").val();
+                var lan_network_mask = $("#lan_mask").val();
+                var lan_network_gateway = $("#lan_gateway").val();
+
+                $.post(
+                    "lan_config.cgi",
+                    {
+                        page:"lan.asp",
+                        num_lan_ifaces:"1",
+                        lan_ifname:"br0",
+                        lan_proto:"dhcp",
+                        lan_ipaddr:lan_network_ip,
+                        lan_netmask:lan_network_mask,
+                        lan_gateway:lan_network_gateway,
+                        action:"Apply"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="page">
@@ -19,13 +50,13 @@
         <div class="nav-box clearfix">
             <ul class="nav navbar">
                 <li>
-                    <a href="../html/quickSet.html">
+                    <a href="quickSet.html">
                         <img src="../images/wifi_set.png" alt="wifi"/>
                         <span>快速设置</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../html/netState.html">
+                    <a href="netState.html">
                         <img src="../images/net_state.png" alt="i" />
                         <span>网络状态</span>
                     </a>
@@ -48,10 +79,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item" id="wan_set"><a href="../html/wanSet.html">WAN设置</a></li>
-                            <li class="el-menu-item is-active" id="lan_set"><a href="../html/lanSet.html">LAN设置</a></li>
-                            <li class="el-menu-item" id="dhcp_set"><a href="../html/dhcpSet.html">DHCP设置</a></li>
-                            <li class="el-menu-item" id="vlan_set"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                            <li class="el-menu-item" id="wan_set"><a href="wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item is-active" id="lan_set"><a href="lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item" id="dhcp_set"><a href="dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item" id="vlan_set"><a href="vlanSet.html">VLAN设置</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -59,9 +90,9 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/basicSet.html">基本设置</a></li>
-                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
-                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                            <li class="el-menu-item"><a href="basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="wirelessFiltration.html">无线过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -69,10 +100,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
-                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
-                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
-                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                            <li class="el-menu-item"><a href="expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="safetyFilter.html">安全过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -80,10 +111,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
-                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
-                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
-                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                            <li class="el-menu-item"><a href="safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="professionSet.html">运行状态</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -100,24 +131,24 @@
                                     <div class="form-group">
                                         <label class="control-label">IP地址：</label>
                                         <div class="input-box">
-                                            <input type="text" class="input" placeholder="IP地址" value="192.168.200.1" readonly />
+                                            <input type="text" class="input" id = "lan_ip" placeholder="IP地址" value="192.168.200.1"  />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">子网掩码：</label>
                                         <div class="input-box">
-                                            <input type="text" class="input" placeholder="子网掩码" value="255.255.255.0" readonly />
+                                            <input type="text" class="input" id = "lan_mask" placeholder="子网掩码" value="255.255.255.0" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">网关：</label>
                                         <div class="input-box">
-                                            <input type="text" class="input" placeholder="网关" value="0.0.0.0" readonly />
+                                            <input type="text" class="input" id = "lan_gateway" placeholder="网关" value="0.0.0.0" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="btn-box">
-                                            <button type="submit" class="btn btn-primary">应用</button>
+                                            <button type="submit" id = "lan_config" class="btn btn-primary">应用</button>
                                         </div>
                                     </div>
                                 </div>

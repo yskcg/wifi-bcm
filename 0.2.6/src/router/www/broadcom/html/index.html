@@ -40,50 +40,54 @@
         }
     </style>
 
-        <script src="../script/jquery-3.1.0.min.js"></script>
-        <script type="text/javascript">
+    <script src="../script/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript">
         $(document).ready(function(){
-                $("form").submit(function(e){
-                        $.post(
-                                "login.cgi",
-                                {
-                                        password: window.btoa($("input[name='password']").val())
-                                },
-                                function(data,status) {
-                                        window.location.href = '../html/quickSet.html';
-                                }
-                        );
-                        return false;
-                });
+            $("form").submit(function(e){
+                $.post(
+                    "login.cgi",
+                    {
+                        password: $("input[name='password']").val()
+                    },
+                    function(data,textStatus){
+                        var auth = data.indexOf('auth');
+                        if(auth >"0") {
+                            window.location.href = '../html/quickSet.html';
+                        }else{
+                            location.reload();
+                        }
+                    }
+                );
+                return false;
+            });
         });
-        </script>
+    </script>
 
 </head>
 <body>
-    <div class="page">
-        <!--<div class="page-header-title">-->
-            <!--<h1 class="title">欢迎使用三网融盒路由器</h1>-->
-        <!--</div>-->
-        <div class="pager-wrapper">
-            <div class="header-title">
-                <h1>欢迎使用三网融盒路由器</h1>
+<div class="page">
+    <!--<div class="page-header-title">-->
+    <!--<h1 class="title">欢迎使用三网融盒路由器</h1>-->
+    <!--</div>-->
+    <div class="pager-wrapper">
+        <div class="header-title">
+            <h1>欢迎使用三网融盒路由器</h1>
+        </div>
+        <div class="text-center">
+            <div class="logo-box">
+                <img src="../images/logo_icon.png" alt="logo">
+                <img src="../images/logo_text.png" alt="logo">
             </div>
-            <div class="text-center">
-                <div class="logo-box">
-                    <img src="../images/logo_icon.png" alt="logo">
-                    <img src="../images/logo_text.png" alt="logo">
-                </div>
-                <div class="login-body">
-                    <form  action = "login.cgi" id= "login" class="form-horizontal" method ="POST" >
-                        <div class="input-icon">
-                            <input class="input" type="password" name="password" placeholder="请输入路由器管理密码" />
-                            <button type="submit" class="input-btn"> > </button>
-                        </div>
-                    </form>
-                </div>
+            <div class="login-body">
+                <form  action = "login.cgi" id= "login" class="form-horizontal" method ="POST" >
+                    <div class="input-icon">
+                        <input class="input" type="password" name="password" placeholder="请输入路由器管理密码" />
+                        <button type="submit" class="input-btn"> > </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
-

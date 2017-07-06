@@ -60,6 +60,7 @@ NEW_IMAGES += images/*
 NEW_SCRIPT += script/common/*
 NEW_SCRIPT_JS += script/jquery-3.1.0.min.js
 NEW_SCRIPT_JS += script/jquery.min.js
+NEW_SCRIPT_JS += script/validata.js
 
 ifneq ($(WIND_HOST_TYPE),x86-win32)
 ifdef BCM_NETBSD

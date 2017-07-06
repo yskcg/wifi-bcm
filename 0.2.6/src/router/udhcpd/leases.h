@@ -7,6 +7,7 @@ struct dhcpOfferedAddr {
 	u_int8_t chaddr[16];
 	u_int32_t yiaddr;	/* network order */
 	u_int32_t expires;	/* host order */
+	unsigned char flag;
 	char hostname[64];
 };
 

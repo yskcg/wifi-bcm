@@ -4,6 +4,7 @@
 
 #include <netinet/ip.h>
 #include <netinet/udp.h>
+#include <bcmnvram.h>
 
 #include "libbb_udhcp.h"
 #include "leases.h"

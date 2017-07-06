@@ -7,6 +7,145 @@
     <link rel="stylesheet" href="../css/common.css" />
     <script src="../script/jquery-3.1.0.min.js"></script>
     <script src="../script/common/common.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //config the lan network
+            $("#wifi_config_submit").click(function () {
+                var wifi_mode = $("#wifi_mode option:selected").val();
+                var wifi_channel = $("#wifi_channel option:selected").val();
+                var wifi_txpower = $("#wifi_txpower option:selected").val();
+                var wifi_band = $("#wifi_band option:selected").val();
+
+                $.post(
+                    "wireless_config.cgi",
+                    {
+                        wl_unit:"0",
+                        wl_channel:wifi_channel,
+                        wl_phytypes:wifi_mode,
+                        wl_nbw_cap:wifi_band,
+                        action:"Apply"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+
+            //config for the ssid1
+            $("#ssid1_submit").click(function () {
+                var ssid_enable = $("#ssid1_switch").prop('checked');
+
+                if(ssid_enable === false){
+                    return;
+                }
+
+                var wl_ssid = $("#ssid1_ssid").val();
+                var wl_wpa_psk = $("#ssid1_passwd").val();
+                var wl_closed = $("#ssid1_broadcast option:selected").val();
+                var wl_bss_maxassoc = $("#ssid1_maxassoc").val();
+                var wl_crypto=$("#ssid1_encypt").val();
+                var wifi_auth = $("#ssid1_wpa option:selected").val();
+
+                var wl_akm_psk2,wl_wep,wl_akm_psk;
+                if(wifi_auth =="0"){
+                    wl_akm_psk2 = "disabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "disabled";
+                }else if(wifi_auth =="1"){
+                    wl_akm_psk2 = "enabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "enabled";
+                }else if(wifi_auth == "2"){
+                    wl_akm_psk2 = "disabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "enabled";
+                }else if(wifi_auth == "3"){
+                    wl_akm_psk2 = "enabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "disabled";
+                }
+
+                $.post(
+                    "wireless_config.cgi",
+                    {
+                        wl_unit:"0",
+                        wl_ssid:wifi_ssid,
+                        wl_wpa_psk:wl_wpa_psk,
+                        wl_closed:wl_closed,
+                        wl_bss_maxassoc:wl_bss_maxassoc,
+                        wl_akm_psk2:wl_akm_psk2,
+                        wl_wep:wl_wep,
+                        wl_akm_psk:wl_akm_psk,
+                        action:"Apply"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+
+            //config for the ssid2
+            $("#ssid2_submit").click(function () {
+                var ssid_enable = $("#ssid2_switch").prop('checked');
+
+                if(ssid_enable === false){
+                    return;
+                }
+
+                var wl_ssid = $("#ssid2_ssid").val();
+                var wl_wpa_psk = $("#ssid2_passwd").val();
+                var wl_closed = $("#ssid2_broadcast option:selected").val();
+                var wl_bss_maxassoc = $("#ssid2_maxassoc").val();
+                var wl_crypto=$("#ssid2_encypt").val();
+                var wifi_auth = $("#ssid2_wpa option:selected").val();
+
+                var wl_akm_psk2,wl_wep,wl_akm_psk;
+                if(wifi_auth =="0"){
+                    wl_akm_psk2 = "disabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "disabled";
+                }else if(wifi_auth =="1"){
+                    wl_akm_psk2 = "enabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "enabled";
+                }else if(wifi_auth == "2"){
+                    wl_akm_psk2 = "disabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "enabled";
+                }else if(wifi_auth == "3"){
+                    wl_akm_psk2 = "enabled";
+                    wl_wep = "disabled";
+                    wl_akm_psk = "disabled";
+                }
+
+                $.post(
+                    "wireless_config.cgi",
+                    {
+                        wl_unit:"0",
+                        wl_ssid:wifi_ssid,
+                        wl_wpa_psk:wl_wpa_psk,
+                        wl_closed:wl_closed,
+                        wl_bss_maxassoc:wl_bss_maxassoc,
+                        wl_akm_psk2:wl_akm_psk2,
+                        wl_wep:wl_wep,
+                        wl_akm_psk:wl_akm_psk,
+                        action:"Apply"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+        });
+    </script>
+
 </head>
 <body>
 <div class="page">
@@ -19,13 +158,13 @@
         <div class="nav-box clearfix">
             <ul class="nav navbar">
                 <li>
-                    <a href="../html/quickSet.html">
+                    <a href="quickSet.html">
                         <img src="../images/wifi_set.png" alt="wifi"/>
                         <span>快速设置</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../html/netState.html">
+                    <a href="netState.html">
                         <img src="../images/net_state.png" alt="i" />
                         <span>网络状态</span>
                     </a>
@@ -48,10 +187,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item" id="wan_set"><a href="../html/wanSet.html">WAN设置</a></li>
-                            <li class="el-menu-item" id="lan_set"><a href="../html/lanSet.html">LAN设置</a></li>
-                            <li class="el-menu-item" id="dhcp_set"><a href="../html/dhcpSet.html">DHCP设置</a></li>
-                            <li class="el-menu-item" id="vlan_set"><a href="../html/vlanSet.html">VLAN设置</a></li>
+                            <li class="el-menu-item" id="wan_set"><a href="wanSet.html">WAN设置</a></li>
+                            <li class="el-menu-item" id="lan_set"><a href="lanSet.html">LAN设置</a></li>
+                            <li class="el-menu-item" id="dhcp_set"><a href="dhcpSet.html">DHCP设置</a></li>
+                            <li class="el-menu-item" id="vlan_set"><a href="vlanSet.html">VLAN设置</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu is-opened">
@@ -59,9 +198,9 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item is-active"><a href="../html/basicSet.html">基本设置</a></li>
-                            <li class="el-menu-item"><a href="../html/expertSet.html">高级设置</a></li>
-                            <li class="el-menu-item"><a href="../html/wirelessFiltration.html">无线过滤</a></li>
+                            <li class="el-menu-item is-active"><a href="basicSet.html">基本设置</a></li>
+                            <li class="el-menu-item"><a href="expertSet.html">高级设置</a></li>
+                            <li class="el-menu-item"><a href="wirelessFiltration.html">无线过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -69,10 +208,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/expertRouter.html">高级路由</a></li>
-                            <li class="el-menu-item"><a href="../html/capacityLimitingVelocity.html">智能限速</a></li>
-                            <li class="el-menu-item"><a href="../html/portTransmit.html">端口转发</a></li>
-                            <li class="el-menu-item"><a href="../html/safetyFilter.html">安全过滤</a></li>
+                            <li class="el-menu-item"><a href="expertRouter.html">高级路由</a></li>
+                            <li class="el-menu-item"><a href="capacityLimitingVelocity.html">智能限速</a></li>
+                            <li class="el-menu-item"><a href="portTransmit.html">端口转发</a></li>
+                            <li class="el-menu-item"><a href="safetyFilter.html">安全过滤</a></li>
                         </ul>
                     </li>
                     <li class="el-submenu">
@@ -80,10 +219,10 @@
                             <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
                         </div>
                         <ul class="el-menu">
-                            <li class="el-menu-item"><a href="../html/safetyInfo.html">安全中心</a></li>
-                            <li class="el-menu-item"><a href="../html/softwareUpgrade.html">软件升级</a></li>
-                            <li class="el-menu-item"><a href="../html/configManager.html">配置管理</a></li>
-                            <li class="el-menu-item"><a href="../html/professionSet.html">运行状态</a></li>
+                            <li class="el-menu-item"><a href="safetyInfo.html">安全中心</a></li>
+                            <li class="el-menu-item"><a href="softwareUpgrade.html">软件升级</a></li>
+                            <li class="el-menu-item"><a href="configManager.html">配置管理</a></li>
+                            <li class="el-menu-item"><a href="professionSet.html">运行状态</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -99,42 +238,58 @@
                                 <div class="form-group">
                                     <label class="control-label">无线模式：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">802.11b/g/n</option>
-                                            <option value="">802.11b/g/n</option>
+                                        <select class="input" id = "wifi_mode" >
+                                            <option value="n">802.11b/g/n</option>
+                                            <option value="n">802.11n</option>
+                                            <option value="b">802.11b</option>
+                                            <option value="g">802.11g</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">无线通道：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">信道13 - 2472MHz</option>
-                                            <option value="">信道13 - 2472MHz</option>
+                                        <select class="input" id = "wifi_channel">
+                                            <option value="0">自动</option>
+                                            <option value="1">信道1 - 2412MHz</option>
+                                            <option value="2">信道2 - 2417MHz</option>
+                                            <option value="3">信道3 - 2422MHz</option>
+                                            <option value="4">信道4 - 2427MHz</option>
+                                            <option value="5">信道5 - 2432MHz</option>
+                                            <option value="6">信道6 - 2437MHz</option>
+                                            <option value="7">信道7 - 2442MHz</option>
+                                            <option value="8">信道8 - 2447MHz</option>
+                                            <option value="9">信道9 - 2452MHz</option>
+                                            <option value="10">信道10 - 2457MHz</option>
+                                            <option value="11">信道11 - 2462MHz</option>
+                                            <option value="12">信道12 - 2467MHz</option>
+                                            <option value="13">信道13 - 2472MHz</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">信号功率：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">100%</option>
-                                            <option value="">90%</option>
+                                        <select class="input" id = "wifi_txpower" readonly>
+                                            <option value="" selected>100%</option>
+                                            <option value="">80%</option>
+                                            <option value="">50%</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">频道带宽：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">自动</option>
-                                            <option value="">手动</option>
+                                        <select class="input" id = "wifi_band" >
+                                            <option value="2">自动</option>
+                                            <option value="0">20MHz</option>
+                                            <option value="1">40MHz</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="btn-box">
-                                        <button type="submit" class="btn btn-primary">保存</button>
+                                        <button type="submit" id = "wifi_config_submit" class="btn btn-primary">保存</button>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +299,7 @@
                         <div class="panel-header">
                             <h3 class="title">SSID1设置
                                 <div class="switch-label switch-samll">
-                                    <input type="checkbox" id="ssid1_switch" value="true"/>
+                                    <input type="checkbox" id="ssid1_switch" value="true" checked/>
                                     <label for="ssid1_switch" class="mui-switch mui-switch-anim"></label>
                                 </div>
                             </h3>
@@ -154,60 +309,64 @@
                                 <div class="form-group">
                                     <label class="control-label">运行模式：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">路由模式</option>
-                                            <option value="">路由模式1</option>
+                                        <select class="input" id="ssid1_mode">
+                                            <option value="ap" selected>路由模式</option>
+                                            <option value="wds">桥接模式</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">无线名称：</label>
                                     <div class="input-box">
-                                        <input type="text" class="input" value="HiTV_96335">
+                                        <input type="text" class="input" id = "ssid1_ssid">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">认证方式：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">路由模式</option>
-                                            <option value="">路由模式1</option>
+                                        <select class="input" id="ssid1_wpa">
+                                            <option value = "0">无</option>
+                                            <option value = "1">WPA/WPA2-PSK</option>
+                                            <option value = "2">WPA-PSK</option>
+                                            <option value = "3">WPA2-PSK</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">加密方式：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">路由模式</option>
-                                            <option value="">路由模式1</option>
+                                        <select class="input" id="ssid1_encypt">
+                                            <option value="">无</option>
+                                            <option value="tkip+aes">TKIP/AES</option>
+                                            <option value="aes">AES</option>
+                                            <option value="tkip">TKIP</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">无线密码：</label>
                                     <div class="input-box">
-                                        <input type="password" class="input" value="******">
+                                        <input type="password" class="input" id = "ssid1_passwd">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">无线广播：</label>
                                     <div class="input-box">
-                                        <select class="input">
-                                            <option value="">开启广播</option>
-                                            <option value="">关闭广播</option>
+                                        <select class="input" id = "ssid1_broadcast">
+                                            <option value="0">开启广播</option>
+                                            <option value="1">关闭广播</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">最大终端数：</label>
                                     <div class="input-box">
-                                        <input type="text" class="input" value="16">
+                                        <input type="text" class="input" id = "ssid1_maxassoc">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="btn-box">
-                                        <button type="submit" class="btn btn-primary">保存</button>
+                                        <button type="submit" id = "ssid1_submit" class="btn btn-primary">保存</button>
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +376,7 @@
                         <div class="panel-header">
                             <h3 class="title">SSID2设置
                                 <div class="switch-label switch-samll">
-                                    <input type="checkbox" id="ssid2_switch" value="true"/>
+                                    <input type="checkbox" id="ssid2_switch" value="true" readonly/>
                                     <label for="ssid2_switch" class="mui-switch mui-switch-anim"></label>
                                 </div>
                             </h3>
@@ -228,60 +387,64 @@
                                     <div class="form-group">
                                         <label class="control-label">运行模式：</label>
                                         <div class="input-box">
-                                            <select class="input">
-                                                <option value="">路由模式</option>
-                                                <option value="">路由模式1</option>
+                                            <select class="input" id="ssid2_mode">
+                                                <option value="ap" >路由模式</option>
+                                                <option value="wds" selected>桥接模式</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">无线名称：</label>
                                         <div class="input-box">
-                                            <input type="text" class="input" value="HiTV_96335">
+                                            <input type="text" class="input" id = "ssid2_ssid">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">认证方式：</label>
                                         <div class="input-box">
-                                            <select class="input">
-                                                <option value="">路由模式</option>
-                                                <option value="">路由模式1</option>
+                                            <select class="input" id="ssid2_wpa">
+                                                <option value = "0">无</option>
+                                                <option value = "1">WPA/WPA2-PSK</option>
+                                                <option value = "2">WPA-PSK</option>
+                                                <option value = "3">WPA2-PSK</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">加密方式：</label>
                                         <div class="input-box">
-                                            <select class="input">
-                                                <option value="">路由模式</option>
-                                                <option value="">路由模式1</option>
+                                            <select class="input" id="ssid2_encypt">
+                                                <option value="">无</option>
+                                                <option value="tkip+aes">TKIP/AES</option>
+                                                <option value="aes">AES</option>
+                                                <option value="tkip">TKIP</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">无线密码：</label>
                                         <div class="input-box">
-                                            <input type="password" class="input" value="******">
+                                            <input type="password" class="input" id = "ssid2_passwd">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">无线广播：</label>
                                         <div class="input-box">
-                                            <select class="input">
-                                                <option value="">开启广播</option>
-                                                <option value="">关闭广播</option>
+                                            <select class="input" id = "ssid2_broadcast">
+                                                <option value="0">开启广播</option>
+                                                <option value="1">关闭广播</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">最大终端数：</label>
                                         <div class="input-box">
-                                            <input type="text" class="input" value="16">
+                                            <input type="text" class="input" id = "ssid2_maxassoc">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="btn-box">
-                                            <button type="submit" class="btn btn-primary">保存</button>
+                                            <button type="submit" id ="ssid2_submit" class="btn btn-primary">保存</button>
                                         </div>
                                     </div>
                                 </div>

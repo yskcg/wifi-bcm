@@ -1,4 +1,4 @@
-CTYPE html>
+<!DOCTYPE html>
 <html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
@@ -10,55 +10,193 @@ CTYPE html>
     <script src="../script/validata.js"></script>
 
     <script type="text/javascript">
-        $(document).on("click","#wifi_submit",function() {
-            var wifi_disable = $('#wifi_switch').prop('checked')
-            var wifi_encoce_disable = $('#pwd_input_switch').prop('checked')
+        function wps_start() {
+            var wifi_passwd = "<% nvram_get("wl0_wpa_psk"); %>";
+            var wifi_crypto = "<% nvram_get("wl0_crypto"); %>";
+            var wifi_akm = "<% nvram_get("wl0_akm"); %>";
+            var wifi_ssid = "<% nvram_get("wl0_ssid"); %>";
 
-            if(wifi_disable){
-                //config the wireless
-                if (validate.length_6_32(document.getElementById("wifi_name"), "无线名称")) {
-                    if(wifi_encoce_disable){
-                        if (validate.length_6_32(document.getElementById("pwd_input"), "无线密码")) {
+            $.post(
+                "wifi_wps.cgi",
+                {
+                    invite_name: "0",
+                    invite_mac: "0",
+                    wl_wfi_enable: "0",
+                    wl_wfi_pinmode: "0",
+                    wl_unit: "0",
+                    wl_wps_mode: "enabled",
+                    wps_action: "AddEnrollee",
+                    wps_ssid: wifi_ssid,
+                    wps_akm: wifi_akm,
+                    wps_crypto: wifi_crypto,
+                    wps_psk: wifi_passwd,
+                    wps_sta_pin: "",
+                    action: "Add+Enrollee"
+                },
+                function (data, status) {
+                    console.log("success!");
+                }
+            );
+            return false;
+        }
+
+        $(document).ready(function() {
+            $("#wifi_submit").click(function () {
+                var wifi_disable = $('#wifi_switch').prop('checked')
+                var wifi_encoce_disable = $('#pwd_input_switch').prop('checked')
+
+                if (wifi_disable) {
+                    //config the wireless
+                    if (validate.length_6_32(document.getElementById("wifi_name"), "无线名称")) {
+                        if (wifi_encoce_disable) {
+                            if (validate.length_6_32(document.getElementById("pwd_input"), "无线密码")) {
+                                $.post(
+                                    "wireless_config.cgi",
+                                    {
+                                        wl_ssid: $("#wifi_name").val(),
+                                        wl_wpa_psk: $("#pwd_input").val(),
+                                        wl0_wpa_psk: $("#pwd_input").val(),
+                                        wl_akm_psk: "enabled",
+                                        wl_akm_psk2: "enabled",
+                                        wl_wep: "disabled",
+                                        wl_crypto: "tkip+aes",
+                                        wl_radio: "1",
+                                        wl_unit: "0",
+                                        wl_auth: "0",
+                                        wl_akm: "",
+                                        action: "Apply"
+                                    },
+                                    function (data, status) {
+                                        location.reload();
+                                        console.log("success!");
+                                    }
+                                );
+                            }
+                        } else {
+                            //no passwd of wireless
                             $.post(
                                 "wireless_config.cgi",
                                 {
-                                    wifi_name:$("#wifi_name").val(),
-                                    password: $("#pwd_input").val()
+                                    wl_ssid: $("#wifi_name").val(),
+                                    wl_wpa_psk: "",
+                                    wl_akm_psk: "disabled",
+                                    wl_akm_psk2: "disabled",
+                                    wl_wep: "disabled",
+                                    wl_crypto: "tkip+aes",
+                                    wl_radio: "1",
+                                    wl_akm: "",
+                                    action: "Apply"
                                 },
                                 function (data, status) {
+                                    location.reload();
                                     console.log("success!");
                                 }
                             );
                         }
-                    }else{
-                        //no passwd of wireless
-                        $.post(
-                            "wireless_config.cgi",
-                            {
-                                wifi_name:$("#wifi_name").val(),
-                                password: "none"
-                            },
-                            function (data, status) {
-                                console.log("success!");
-                            }
-                        );
+
                     }
+                } else {
+                    //turn off the wireless
+                    $.post(
+                        "wireless_disable.cgi",
+                        {
+                            wl_radio: "0",
+                            action: "Apply"
+                        },
+                        function (data, status) {
+                            location.reload();
+                            console.log("success!");
+                        }
+                    );
 
                 }
-            }else{
-                //turn off the wireless
+                return false;
+            });
+
+            //wps click event
+            $("#wps_submit").click(function () {
+                var wifi_crypto;
+                $("#wps_status").val("正在配对");
+                var wifi_passwd = "<% nvram_get("wl0_wpa_psk"); %>";
+
+                var wifi_akm = 0;
+                wifi_akm = $.trim("<% nvram_get("wl0_akm"); %>");
+                if(wifi_akm == 0){
+                    wifi_crypto = "Open";
+                }else{
+                    if(wifi_akm == "psk2"){
+                        wifi_akm = "WPA2-PSK";
+                    }else{
+                        wifi_akm = "WPA/WPA2-PSK";
+                    }
+                    wifi_crypto = "<% nvram_get("wl0_crypto"); %>";
+                    if(wifi_crypto =="aes"){
+                        wifi_crypto = "AES";
+                    }else if(wifi_crypto == "tkip+aes"){
+                        wifi_crypto = "TKIP+AES";
+                    }
+                }
+
+                var wifi_ssid = "<% nvram_get("wl0_ssid"); %>";
+
                 $.post(
-                    "wireless_disable.cgi",
+                    "wifi_wps.cgi",
                     {
-                        wifi_disable:wifi_disable
+                        page:"pwps.asp",
+                        invite_name: "0",
+                        invite_mac: "0",
+                        wl_wfi_enable: "0",
+                        wl_wfi_pinmode: "0",
+                        wl_unit: "0",
+                        wl_wps_mode: "enabled",
+                        wps_action: "AddEnrollee",
+                        wps_ssid: wifi_ssid,
+                        wps_akm: wifi_akm,
+                        wps_crypto: wifi_crypto,
+                        wps_psk: wifi_passwd,
+                        wps_sta_pin: "",
+                        action: "Add Enrollee"
                     },
                     function (data, status) {
+                        $("#wps_status").val("配对成功");
                         console.log("success!");
                     }
                 );
 
-            }
+                $("#wps_status")
 
+                return false;
+            });
+
+            //restore the default config
+            $("#restore_default").click(function () {
+                $.post(
+                    "default_config.cgi",
+                    {
+                        action: "Restore"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+
+            //reboot the router
+            $("#router_reboot").click(function () {
+                $.post(
+                    "reboot.cgi",
+                    {
+                        action: "Reboot"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
         });
     </script>
 
@@ -111,7 +249,7 @@ CTYPE html>
                                 </div>
                                 <div class="switch-box switch-blue">
                                     <div class="switch-label wifi_open_colse">
-                                        <input type="checkbox" id="wifi_switch" value="true" />
+                                        <input type="checkbox" id="wifi_switch" checked= "1" />
                                         <label for="wifi_switch" class="mui-switch mui-switch-anim"></label>
                                     </div>
                                 </div>
@@ -145,12 +283,12 @@ CTYPE html>
                             <div class="form-group">
                                 <label class="control-label">匹配状态：</label>
                                 <div class="input-box">
-                                    <input type="text" class="input" placeholder="正在配对中……" readonly />
+                                    <input type="text" class="input" id = "wps_status" placeholder="未启动" readonly />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="btn-box">
-                                    <button type="submit" class="btn btn-primary">开始配对</button>
+                                    <button type="submit" id = "wps_submit" class="btn btn-primary">开始配对</button>
                                 </div>
                             </div>
                         </div>
@@ -164,12 +302,12 @@ CTYPE html>
                         <div class="form-content">
                             <div class="form-group">
                                 <div class="btn-box">
-                                    <button type="submit" class="btn btn-primary">恢复出厂设置</button>
+                                    <button type="submit" id = "restore_default" class="btn btn-primary">恢复出厂设置</button>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="btn-box">
-                                    <button type="submit" class="btn btn-primary">重启路由器</button>
+                                    <button type="submit" id = "router_reboot" class="btn btn-primary">重启路由器</button>
                                 </div>
                             </div>
                         </div>

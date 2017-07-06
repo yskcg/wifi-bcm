@@ -83,6 +83,7 @@ set_cgi(char *name, char *value)
 		return;
 
 	e.key = name;
+	printf("%s %d key:%s = %s\n",__FUNCTION__,__LINE__,name,value);
 	hsearch_r(e, FIND, &ep, &htab);
 	if (ep)
 		ep->data = value;
@@ -125,8 +126,10 @@ init_cgi(char *query)
 
 		/* Assign variable */
 		name = strsep(&value, "=");
-		if (value)
+		if (value){
+			printf("%s %d name:%s value:%s\n",__FUNCTION__,__LINE__,name,value);
 			set_cgi(name, value);
+		}
 	}
 }
 

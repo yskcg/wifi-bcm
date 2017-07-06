@@ -28,7 +28,9 @@ void clear_lease(u_int8_t *chaddr, u_int32_t yiaddr)
 	for (i = 0; i < server_config.max_leases; i++)
 		if ((j != 16 && !memcmp(leases[i].chaddr, chaddr, 16)) ||
 		    (yiaddr && leases[i].yiaddr == yiaddr)) {
-			memset(&(leases[i]), 0, sizeof(struct dhcpOfferedAddr));
+			if(leases[i].flag !=1){
+				memset(&(leases[i]), 0, sizeof(struct dhcpOfferedAddr));
+			}
 		}
 }
 
@@ -47,6 +49,8 @@ struct dhcpOfferedAddr *add_lease(u_int8_t *chaddr, u_int32_t yiaddr, unsigned l
 		memcpy(oldest->chaddr, chaddr, 16);
 		oldest->yiaddr = yiaddr;
 		oldest->expires = time(0) + lease;
+		LOG(LOG_INFO, "udhcp %s %d mac:%02x:%02x:%02x:%02x:%02x:%02x ip:%u\n", __FUNCTION__,__LINE__,oldest->chaddr[0],\
+			oldest->chaddr[1],oldest->chaddr[2],oldest->chaddr[3],oldest->chaddr[4],oldest->chaddr[5],oldest->yiaddr);
 	}
 	
 	return oldest;

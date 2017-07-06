@@ -1,10 +1,4 @@
 
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/bin/busybox:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/bin/eapd:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/bin/wps_monitor:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/sbin/hotplug2:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/sbin/rc:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/sbin/udevtrigger:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/lib/iptables/libip6t_ah.so:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/lib/iptables/libip6t_connmark.so:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/lib/iptables/libip6t_CONNMARK.so:
@@ -102,420 +96,144 @@
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/lib/libnvram.so:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/lib/libshared.so:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/brctl:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/dnsmasq:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/emf:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/epi_ttcp:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/et:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/httpd:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/igmp:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/igs:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/iptables:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/iptables-restore:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/nas:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/nvram:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/pppoecd:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/udhcpd:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/vconfig:
+/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/tcpdump:
 /home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/wl:
-/home/yangshaokun/work/ow/wifi-bcm/0.2.6/src/router/mipsel-uclibc/target/usr/sbin/wlconf:
          U abort
-         U accept
-         U access
          U addr_to_anyname
          U addr_to_dotted
-         U add_to_list
-         U aes_cbc_decrypt_pad
-         U aes_cbc_encrypt_pad
-         U aes_unwrap
-         U aes_wrap
          U alarm
          U __assert
          U atof
          U atoi
-         U authunix_create_default
-         U basename
-         U bcmgpio_connect
-         U bcmgpio_disconnect
-         U bcmgpio_getpin
-         U bcmgpio_in
-         U bcmgpio_out
          U bcmp
-         U bcm_timer_change_expirytime
          U bcm_timer_connect
          U bcm_timer_create
          U bcm_timer_delete
-         U bcm_timer_module_cleanup
-         U bcm_timer_module_enable
-         U bcm_timer_module_init
          U bcm_timer_settime
          U bcopy
-         U bind
-         U bindresvport
-         U BN_bin2bn
-         U BN_bn2bin
-         U BN_CTX_free
-         U BN_CTX_new
-         U BN_free
-         U BN_mod_exp_mont
-         U BN_mod_exp_mont_word
-         U BN_MONT_CTX_new
-         U BN_MONT_CTX_set
-         U BN_new
-         U BN_num_bits
-         U bsearch
          U calloc
-         U cfmakeraw
-         U chdir
          U check_inverse
-         U chmod
-         U chown
          U clearerr
-         U clnt_spcreateerror
-         U clnt_sperror
-         U clnttcp_create
-         U clntudp_create
-         U clock_gettime
          U close
-         U closedir
-         U closelog
-         U __cmsg_nxthdr
-         U connect
-         U convert_deprecated
-         U create_module
-         U crypt
-         U ctime
          U __ctype_b
          U __ctype_tolower
          U __ctype_toupper
-         U __cxa_atexit
-         U daemon
-         U del_autofw_port
-         U delete_module
-         U del_filter_client
-         U del_forward_port
-         U DH_compute_key_bn
-         U DH_free
-         U DH_generate_key
-         U DH_new
-         U difftime
-         U dirname
-         U div
          U dlerror
          U dlopen
          U dotted_to_addr
          U dotted_to_mask
-         U dprintf
-         U drand48
-         U dup
          U dup2
-         U endmntent
-         U environ
-         U __environ
          U __errno_location
-         U ether_atoe
-         U ether_etoa
-         U _eval
-         U execl
-         U execle
-         U execlp
          U execv
-         U execve
          U execvp
          U exit
-         U _exit
          U exit_error
-         U fchdir
-         U fchmod
-         U fchown
          U fclose
-         U fcntl
-         U fcntl64
-         U fdopen
          U feof
          U ferror
          U fflush
          U ffs
-         U fgetc
-         U __fgetc_unlocked
          U fgets
-         U file2str
-         U fileno
-         U find_in_list
-         U fnmatch
          U fopen
-         U fopen64
          U fork
-         U fPRF
          U fprintf
          U fputc
          U __fputc_unlocked
          U fputs
          U fread
          U free
-         U freeaddrinfo
-         U fscanf
-         U fseek
-         U fstat
-         U fstat64
-         U fsync
-         U ftello64
-         U ftruncate64
          U fwrite
-         U getaddrinfo
-         U get_autofw_port
-         U getcwd
-         U getdomainname
-         U getegid
          U getenv
-         U geteuid
-         U get_filter_client
-         U get_forward_port
-         U getgid
          U getgrgid
          U getgrnam
-         U getgroups
          U gethostbyaddr
          U gethostbyname
-         U gethostid
-         U gethostname
-         U get_ifname_by_wlmac
-         U get_ifname_unit
          U getitimer
          U get_kernel_version
-         U getlogin
-         U getmntent
-         U getmntent_r
-         U getnameinfo
          U getnetbyaddr
          U getnetbyname
-         U getopt
          U getopt_long
-         U getpeername
-         U getpgrp
          U getpid
-         U get_pid_by_name
-         U getppid
          U getprotobyname
          U getprotobynumber
          U getpwnam
          U getpwuid
-         U getrlimit64
-         U getrusage
          U getservbyname
          U getservbyport
-         U getsockname
          U getsockopt
          U gettimeofday
-         U getuid
-         U get_wsec
-         U gmtime
-         U gmtime_r
-         U grantpt
-         U hcreate_r
-         U hdestroy_r
-         U __h_errno_location
-         U hmac_md5
-         U hmac_sha1
-         U hmac_sha256
-         U hsearch_r
-         U hstrerror
-         U htonl
          U if_indextoname
          U if_nametoindex
-         U inet_addr
          U inet_aton
-         U inet_netof
          U inet_ntoa
          U inet_ntop
          U inet_pton
-         U init_module
          U ioctl
          U ipv6_prefix_length
-         U isalnum
-         U isalpha
-         U isatty
-         U isblank
-         U islower
-         U ispunct
-         U isspace
-         U isupper
          U kernel_version
          U kill
-         U killpg
-         U klogctl
-         U lchown
-         U link
-         U listen
-         U localtime
-         U localtime_r
-         U lockf
-         U longjmp
-         U lseek64
-         U lstat64
          U malloc
          U mask_to_dotted
-         U MD5Final
-         U MD5Init
-         U MD5Update
          U memchr
          U memcmp
          U memcpy
          U memmove
          U memset
-         U mkdir
-         U mkfifo
-         U mknod
-         U mktemp
-         U mktime
          U mmap
-         U mmap64
-         U mount
-         U mrand48
-         U munmap
-         U netconf_add_filter
-         U netconf_add_fw
-         U netconf_add_nat
-         U netconf_clamp_mss_to_pmtu
-         U netconf_del_filter
-         U netconf_reset_fw
-         U ntohl
-         U nvifname_to_osifname
-         U nvram_commit
-         U nvram_default_get
          U nvram_get
-         U nvram_getall
          U nvram_set
          U nvram_unset
          U open
-         U open64
          U opendir
-         U openlog
          U optarg
          U opterr
          U optind
-         U osifname_to_nvifname
          U parse_hostnetworkmask
          U parse_interface
          U parse_port
          U parse_protocol
-         U passhash
          U perror
          U pipe
-         U pivot_root
-         U pmap_getmaps
-         U pmap_getport
-         U prepare_key
          U printf
-         U ptsname
          U putchar
-         U putenv
          U puts
          U qsort
-         U query_module
-         U raise
          U rand
-         U RAND_bytes
-         U RAND_linux_init
-         U random
-         U rc4
          U read
          U readdir
-         U readdir64
-         U readlink
          U realloc
-         U realpath
-         U reboot
-         U recv
-         U recvfrom
-         U recvmsg
-         U regcomp
-         U regerror
-         U regexec
-         U regfree
          U register_match
          U register_match6
          U register_target
          U register_target6
-         U remove_dups
-         U remove_from_list
-         U rename
-         U rijndaelKeySetupDec
-         U rijndaelKeySetupEnc
-         U rmdir
-         U router_defaults
-         U safe_fread
-         U safe_fwrite
-         U sched_yield
          U select
-         U semctl
-         U semget
-         U semop
-         U send
-         U sendmsg
-         U sendto
-         U set_autofw_port
-         U setbuf
          U setenv
-         U set_filter_client
-         U set_forward_port
-         U setgid
-         U setgroups
-         U sethostname
          U setitimer
-         U _setjmp
-         U setlogmask
-         U setmntent
-         U setpgid
-         U setresgid
-         U setresuid
-         U setrlimit64
          U setsid
          U setsockopt
-         U settimeofday
-         U setuid
-         U SHA256
-         U shmat
-         U shmctl
-         U shmdt
-         U shmget
-         U sigaction
          U sigaddset
          U sigemptyset
-         U sigfillset
-         U siglongjmp
          U signal
          U sigprocmask
-         U __sigsetjmp
-         U sigsuspend
          U sleep
          U snprintf
          U socket
-         U socketpair
          U sprintf
          U srand
-         U srand48
-         U srandom
          U sscanf
-         U stat
-         U stat64
-         U statfs64
          U stderr
          U stdin
-         U __stdin
          U stdout
          U __stdout
-         U stime
          U strcasecmp
-         U strcasestr
          U strcat
          U strchr
-         U strchrnul
          U strcmp
          U strcpy
          U strcspn
          U strdup
          U strerror
-         U strftime
          U string_to_number
          U string_to_number_l
          U strlen
@@ -523,79 +241,25 @@
          U strncat
          U strncmp
          U strncpy
-         U strnlen
-         U strpbrk
          U strrchr
          U strsep
-         U strsignal
          U strspn
          U strstr
-         U strtod
          U strtok
-         U strtok_r
          U strtol
-         U strtoll
          U strtoul
          U strtoull
-         U symlink
-         U sync
-         U syscall
-         U sysconf
-         U sysinfo
-         U syslog
-         U system
-         U tcflush
-         U tcgetattr
-         U tcgetpgrp
-         U tcsetattr
-         U tcsetpgrp
          U time
-         U times
          U tolower
          U toupper
          U __uClibc_main
-         U umask
-         U umount
-         U umount2
          U uname
-         U unlink
-         U unlockpt
-         U unsetenv
-         U ure_any_enabled
          U usleep
-         U utime
-         U vasprintf
-         U vfork
          U vfprintf
-         U vprintf
          U vsnprintf
-         U vsprintf
-         U vsyslog
          U wait
-         U wait3
-         U wait4
-         U waitfor
          U waitpid
-         U wl_bssiovar_get
-         U wl_bssiovar_set
-         U wl_bssiovar_setint
-         U wl_hwaddr
-         U wl_ioctl
-         U wl_iovar_get
-         U wl_iovar_getbuf
-         U wl_iovar_getint
-         U wl_iovar_set
-         U wl_iovar_setint
-         U wl_probe
          U write
-         U xdr_array
-         U xdr_bytes
-         U xdr_enum
-         U xdr_int
-         U xdr_opaque
-         U xdr_string
-         U xdr_u_int
-         U __xpg_basename
          w __cxa_finalize
          w __deregister_frame_info
          w _Jv_RegisterClasses

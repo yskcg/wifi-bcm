@@ -641,7 +641,8 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 	/* Write out leases file */
 	sprintf(sigusr1, "-%d", SIGUSR1);
 	eval("killall", sigusr1, "udhcpd");
-
+	
+	printf("%s %d sigusr1:%d\n",__FUNCTION__,__LINE__,SIGUSR1);
 	/* Count the number of lan and guest interfaces */
 
 	if (nvram_get("lan_ifname"))
@@ -1098,6 +1099,7 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 	if (nvram_get("lan1_ifname"))
 		num_interfaces++;
 	
+	printf("%s %d \n",__FUNCTION__,__LINE__);
 	for (index =0; index < num_interfaces; index++){
 		snprintf(word, sizeof(word),"/etc/dhcpd%d.leases",index);
 
@@ -1338,6 +1340,7 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 	struct lease_t *lease, *dump;
 	int last;
 
+	printf("%s %d \n",__FUNCTION__,__LINE__);
 	/* Count the number of lan and guest interfaces */
 	if (nvram_get("lan_ifname"))
 		num_interfaces++;
@@ -5262,9 +5265,7 @@ ej_wl_cur_channel(int eid, webs_t wp, int argc, char_t **argv)
 		interference = *(int*)retbuf;
 	}
 
-	return websWrite(wp, "当前: %d %s",
-			 (channel + chan_adj),
-			 CHANIMSTR(chanim_enab, interference, CHANIM_S, CHANIM_A));
+	return websWrite(wp, "%d",(channel + chan_adj));
 
 #undef CHANIMSTR
 }
@@ -5350,7 +5351,7 @@ ej_wl_cur_phytype(int eid, webs_t wp, int argc, char_t **argv)
 
 	/* Get configured phy type */
 	wl_ioctl(name, WLC_GET_PHYTYPE, &phytype, sizeof(phytype));
-
+	printf("phytype:%d\n",phytype);
 	if ((phytype != WLC_PHY_TYPE_N) && (phytype != WLC_PHY_TYPE_SSN) &&
 	    (phytype != WLC_PHY_TYPE_LCN) && (phytype != WLC_PHY_TYPE_HT))
 		if (phytype == WLC_PHY_TYPE_LP) {
@@ -11058,12 +11059,15 @@ validate_cgi(webs_t wp)
 	printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 	/* Validate and set variables in table order */
 	for (v = variables; v < &variables[ARRAYSIZE(variables)]; v++) {
+		if(strstr(v->name,"wl_")){
+			printf("v->name=%s,value=%s \n", v->name, value);
+		}
 		if (!(value = websGetVar(wp, v->name, NULL)))
 			continue;
-
+		printf("v->name=%s,value=%s \n", v->name, value);
 		if (v->ezc_flags & WEB_IGNORE)
 			continue;
-		printf("v->name=%s,value=%s", v->name, value);
+		printf("v->name=%s,value=%s \n", v->name, value);
 		if ((!*value && v->nullok) || !v->validate)
 			nvram_set(v->name, value);
 		else
@@ -12225,16 +12229,20 @@ apply_cgi(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
 	page = websGetVar(wp, "page", "");
 
 	value = websGetVar(wp, "action", "");
-
+	printf("function=%s,line=%d,action:%s,page:%s\r\n",__FUNCTION__,__LINE__,value,page);
 	/* Apply values */
 	if (!strcmp(value, "Apply")) {
 		action = RESTART;
 		websWrite(wp, "验证设置...");
-
-		if (strcmp("lan.asp",page))
+		printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
+		if (strcmp("lan.asp",page)){
+			printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 			validate_cgi(wp);
-		else
+		}else{
+			printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 			validate_lan_cgi(wp);
+		}
+
 		if(ret_code)
 		{
 			websWrite(wp, "<br>");
@@ -12245,6 +12253,7 @@ apply_cgi(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
 			nvram_set("is_modified", "1");
 			nvram_set("is_default", "0");
 			nvram_commit();
+			printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 			websWrite(wp, "完成<br>");
 		}
 	}
@@ -12257,7 +12266,7 @@ apply_cgi(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
 		websWrite(wp, "done<br>");
 		action = REBOOT;
 	}
-
+	
 	/* Release lease */
 	else if (!strcmp(value, "Release")) {
 		websWrite(wp, "释放连接...");
@@ -12321,9 +12330,11 @@ apply_cgi(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
 		websWrite(wp, "Turing Off Radio...");
 		wl_radio_onoff(wp, 1);
 		action = NOTHING;
+		printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 	}
 	else if (!strcmp(value, "RadioOn")) {
 		websWrite(wp, "Radio on...");
+		printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 		wl_radio_onoff(wp, 0);
 		action = NOTHING;
 	}
@@ -12490,6 +12501,7 @@ copy_wl_index_to_unindex(webs_t wp, char_t *urlPrefix, char_t *webDir,
 	char *wl_bssid = NULL;
 	char  vif[64] ;
 
+	printf("function=%s,line=%d,url:%s,path:%s,query:%s action:%s\r\n",__FUNCTION__,__LINE__,url,path,query,websGetVar(wp,"action",NULL));
 	/* Can enter this function through GET or POST */
 	if ((value = websGetVar(wp, "action", NULL))) {
 		if (strcmp(value, "Select"))
@@ -12502,6 +12514,7 @@ copy_wl_index_to_unindex(webs_t wp, char_t *urlPrefix, char_t *webDir,
 				if ((wl_bssid = websGetVar(wp, "wl_bssid", NULL)) && (atoi(wl_bssid))){
 					snprintf(vif,sizeof(vif),"%s.%s",value,wl_bssid);
 					value = vif;
+					printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 				}
 				if (!strcmp( nvram_safe_get("wl_unit" ), value)){
 					printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
@@ -12509,7 +12522,9 @@ copy_wl_index_to_unindex(webs_t wp, char_t *urlPrefix, char_t *webDir,
 					}
 			}
 			applying = 1;
+			printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 		}
+		printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 	}
 
 	/* copy wl%d_XXXXXXXX to wl_XXXXXXXX */
@@ -12585,8 +12600,10 @@ copy_wl_index_to_unindex(webs_t wp, char_t *urlPrefix, char_t *webDir,
 	/* Set currently selected unit */
 	nvram_set("wl_unit", unit_str);
 
-	if( applying )
+	if( applying ){
+		printf("function=%s,line=%d\r\n",__FUNCTION__,__LINE__);
 		return apply_cgi(wp, urlPrefix, webDir, arg, url, path, query);
+	}
 
 	/* Display the page */
 	return websDefaultHandler(wp, urlPrefix, webDir, arg, url, path, query);
@@ -12678,6 +12695,14 @@ wan_asp(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
 	/* Display the page */
 	return websDefaultHandler(wp, urlPrefix, webDir, arg, url, path, query);
 }
+
+static int 
+wan_connect_action(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
+	     char_t *url, char_t *path, char_t *query)
+{
+	return apply_cgi(wp, urlPrefix, webDir, arg, url, path, query);
+}
+
 #endif	/* __CONFIG_NAT__ */
 
 #ifdef WEBS
@@ -12745,6 +12770,13 @@ char ezc_version[128];
 char no_cache[] =
 "Cache-Control: no-cache\r\n"
 "Pragma: no-cache\r\n"
+"Expires: 0"
+;
+
+char login_cookie[]=
+"Cache-Control: no-cache\r\n"
+"Pragma: no-cache\r\n"
+"set-cookie: auth=1; Path=/; HttpOnly\r\n"
 "Expires: 0"
 ;
 
@@ -12911,10 +12943,10 @@ do_login_post(char *url, FILE *stream, int len, char *boundary)
 	if (buf){
 		authpass = strchr(buf,'=');
 		printf("%s %d form data:%s,%s\n",__FUNCTION__,__LINE__,buf,authpass);
-		length = b64_decode(authpass,(unsigned char *)authinfo,sizeof(authinfo));
-		authinfo[length] = '\0';
+		//length = b64_decode(authpass,(unsigned char *)authinfo,sizeof(authinfo));
+		//authinfo[length] = '\0';
 		printf("%s %d form data:%s\n",__FUNCTION__,__LINE__,authinfo);	
-		p = &authinfo[0];
+		p = authpass +1;
 		if ( p == (char*) 0 ) {
 			/* No colon?  Bogus auth info. */
 			ret_code = 1;
@@ -12943,15 +12975,32 @@ do_login_cgi(char *url,FILE *stream)
 	char buf[512] = {'\0'};
 
 	if(ret_code ==0){
-		printf("%s %d\n",__FUNCTION__,__LINE__);
-		strcpy(domain,nvram_safe_get("lan_gateway"));
-		sprintf(buf,"set-cookie: user=admin; passwd=123456; domain=\"%s\"; Path=/; HttpOnly",domain);
-		send_headers(200,"Ok",buf,"text/html");
-	}else{
-		printf("%s %d\n",__FUNCTION__,__LINE__);
+         printf("%s %d\n",__FUNCTION__,__LINE__);
+         strcpy(domain,nvram_safe_get("lan_gateway"));
+         sprintf(buf,"set-cookie: auth=1; domain=\"%s\"; Path=/; HttpOnly",domain);
+         send_headers(200,"Ok",buf,"text/html");
+    }else{printf("%s %d\n",__FUNCTION__,__LINE__);
 		send_headers(400,"Bad Passwd",NULL,"text/html");
 	}
 }
+static void
+do_wireless_cgi(char *url,FILE *stream)
+{
+    assert(url);
+    assert(stream);
+    char domain[512] = {'\0'};
+    char buf[512] = {'\0'};
+
+    if(ret_code ==0){
+         printf("%s %d\n",__FUNCTION__,__LINE__);
+         send_headers(200,"Ok",NULL,NULL);
+    }else{printf("%s %d\n",__FUNCTION__,__LINE__);
+        send_headers(503,"Bad wireless config",NULL,"text/html");
+    }
+}
+
+
+
 
 #ifdef PLC
 static char hex2nible(char c)
@@ -14856,6 +14905,61 @@ do_wireless_asp(char *url, FILE *stream)
 	init_cgi(NULL);
 }
 
+static void 
+do_static_cgi(char *url, FILE *stream)
+{
+	int static_num = 0;
+	int i;
+	char *path=NULL, *query=NULL;
+	char *static_ip_num = NULL;
+	char *static_ip_mac = NULL;
+	char *static_ip = NULL;
+	
+	char key[64] = {'\0'};
+	char value[64] = {'\0'};
+	char sigusr2[] = "-XX";
+
+	assert(stream);
+	assert(url);
+
+	/* Parse path */
+	query = url;
+	path = strsep(&query, "?") ? : url;
+	
+	static_ip_mac = websGetVar(wp, "static_ip_mac", NULL);
+	static_ip = websGetVar(wp, "static_ip", NULL);
+	static_ip_num = websGetVar(wp, "static_ip_num", NULL);
+
+	if(static_ip_mac == NULL | static_ip == NULL){
+		send_headers(503,"static ip config failed",NULL,NULL);
+		return ;
+	}
+
+	/*1 save the static ip config into nvram*/
+	if(static_ip_num == NULL){
+		nvram_set("static_ip_num", "1");
+	}else{
+		static_num = atoi(static_ip_num) +1;
+		sprintf(value,"%d",static_num);
+		nvram_set("static_ip_num",value);
+	}
+	
+	sprintf(key,"static_ip_mac%d",static_num);
+	nvram_set(key,static_ip_mac);
+	memset(key,0,sizeof(key));
+	sprintf(key,"static_ip%d",static_num);
+	nvram_set(key,static_ip);
+	nvram_commit();
+
+	/*2 send the signal to the udhcpd to apply the config*/
+	sprintf(sigusr2, "-%d", SIGUSR2);
+	eval("killall", sigusr2, "udhcpd");
+	
+	/* Reset CGI */
+	init_cgi(NULL);
+	send_headers(200,"Ok",NULL,"text/html");
+}
+
 static void
 do_security_asp(char *url, FILE *stream)
 {
@@ -14964,7 +15068,64 @@ do_wan_asp(char *url, FILE *stream)
 	/* Reset CGI */
 	init_cgi(NULL);
 }
+
+static void do_wan_cgi(char *url, FILE *stream)
+{
+	char *path=NULL, *query=NULL;
+
+	assert(stream);
+	assert(url);
+
+	/* Parse path */
+	query = url;
+	path = strsep(&query, "?") ? : url;
+
+	wan_connect_action(stream, NULL, NULL, 0, url, path, query);
+
+	/* Reset CGI */
+	init_cgi(NULL);
+
+}
+
 #endif	/* __CONFIG_NAT__ */
+
+static int do_passwd_cgi(char *url,FILE *stream)
+{
+	char *path=NULL,*query=NULL;
+	char auth_passwd[AUTH_MAX] = {'\0'};
+	char *new_passwd;
+	char *old_passwd;
+
+	assert(stream);
+	assert(url);
+
+	/* Parse path */
+    query = url;
+    path = strsep(&query, "?") ? : url;
+	
+	strncpy(auth_passwd, nvram_safe_get("http_passwd"), AUTH_MAX);
+
+	new_passwd = websGetVar(stream, "new_passwd", NULL);
+	old_passwd = websGetVar(stream, "old_passwd", NULL);
+	
+	printf("%s %d auth_passwd:%s new_passwd:%s old_passwd:%s \n",__FUNCTION__,__LINE__,auth_passwd,new_passwd,old_passwd);
+
+	if(auth_passwd && old_passwd){
+		if(strcmp(auth_passwd,old_passwd) ==0){
+			nvram_set("http_passwd", new_passwd);
+			nvram_commit();
+
+			send_headers(200,"Ok",NULL,"text/html");
+		}else{
+			send_headers(400,"Bad Passwd",NULL,"text/html");
+		}
+	}else{
+		send_headers(400,"Bad Passwd",NULL,"text/html");
+	}
+
+	/*Reset CGI*/
+	init_cgi(NULL);
+}
 
 static int
 basicset_asp(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
@@ -15502,6 +15663,7 @@ struct mime_handler mime_handlers[] = {
 	{ "security.asp", "text/html", no_cache, do_apply_post, do_security_asp, do_auth },
 #ifdef __CONFIG_WPS__
 	{ "wps.asp", "text/html", no_cache, do_apply_post, do_wps_asp, do_auth },
+	{ "html/wifi_wps.cgi","text/html",no_cache,do_apply_post,do_wps_asp,do_auth},
 #ifdef LW_CUST
 	{ "pwps.asp", "text/html", no_cache, do_apply_post, do_wps_asp, do_auth },
 #endif
@@ -15519,7 +15681,6 @@ struct mime_handler mime_handlers[] = {
     {"stb.asp", "text/html", no_cache, NULL, do_ej, stb_no_auth},
 #endif
 	{ "./html/index.html","text/html",no_cache,NULL,do_ej,NULL},
-	{ "./html/quickSet.html","text/html",no_cache,do_apply_post,do_ej,NULL},
 	{ "basicset.asp", "text/html", no_cache, do_apply_post, do_basicset_asp, NULL },
 	{ "seniorset.asp", "text/html", no_cache, NULL, do_ej, NULL },
 	{ "wirelessseniorsettings.asp", "text/html", no_cache, NULL, do_ej, NULL },
@@ -15536,7 +15697,16 @@ struct mime_handler mime_handlers[] = {
 	{ "**.jpg", "image/jpeg", NULL, NULL, do_file, stb_no_auth},
 	{ "**.png", "image/png", NULL, NULL, do_file, stb_no_auth},
 	{ "**.js", "text/javascript", NULL, NULL, do_file, stb_no_auth},
-	{ "login.cgi","text/html",no_cache,do_login_post,do_login_cgi,NULL},
+	{ "login.cgi","text/html",login_cookie,do_login_post,do_login_cgi,NULL},
+	{ "html/wireless_config.cgi","text/html",NULL,do_apply_post,do_wireless_asp,NULL},
+	{ "html/wan_connect_action.cgi","text/html",NULL,do_apply_post,do_wan_cgi,do_auth},
+	{ "html/change_passwd.cgi","text/html",NULL,do_apply_post,do_passwd_cgi,do_auth},
+	{ "html/default_config.cgi","text/html",NULL,do_apply_post,do_apply_cgi,do_auth},
+	{ "html/reboot.cgi","text/html",NULL,do_apply_post,do_apply_cgi,do_auth},
+	{ "html/wifi_wps.cgi","text/html",NULL,do_apply_post,do_wps_asp,do_auth},
+	{ "html/lan_config.cgi", "text/html", no_cache, do_apply_post, do_apply_cgi, do_auth },
+	{ "html/static_ip_config.cgi", "text/html", no_cache, do_apply_post, do_static_cgi, do_auth},
+
 	{ "stbapply.cgi*", "text/html", no_cache, do_apply_post, do_apply_cgi, NULL },
 	{ "apply.cgi*", "text/html", no_cache, do_apply_post, do_apply_cgi, do_auth },
 	{ "upgrade.cgi*", "text/html", no_cache, do_upgrade_post, do_upgrade_cgi, do_auth },
