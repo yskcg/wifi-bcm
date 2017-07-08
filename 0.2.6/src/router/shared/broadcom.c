@@ -641,6 +641,11 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 	/* Write out leases file */
 	sprintf(sigusr1, "-%d", SIGUSR1);
 	eval("killall", sigusr1, "udhcpd");
+
+	/*Write out static leases file*/
+	memset(sigusr1,0,sizeof(sigusr1));
+	sprintf(sigusr1,"-%d",SIGUSR2);
+	eval("killall", sigusr1, "udhcpd");
 	
 	printf("%s %d sigusr1:%d\n",__FUNCTION__,__LINE__,SIGUSR1);
 	/* Count the number of lan and guest interfaces */
@@ -686,7 +691,30 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 		}
 
 		fclose(fp);
+		fp = NULL;
 	}
+
+	/*for the static lease*/
+
+	if (!(fp = fopen("/tmp/udhcpd0_static.leases", "r"))){
+		return ret;
+	}
+
+	while (fread(&lease, sizeof(lease), 1, fp)) {
+		/* Do not display reserved leases */
+		if (ETHER_ISNULLADDR(lease.chaddr))
+			continue;
+		ret += websWrite(wp, "<tr style=\"width:auto\"><td style=\"width:auto\">%s</td><td style=\"width:auto\">", lease.hostname);
+		for (i = 0; i < 6; i++) {
+			ret += websWrite(wp, "%02X", lease.chaddr[i]);
+			if (i != 5) ret += websWrite(wp, ":");
+		}
+		addr.s_addr = lease.yiaddr;
+		ret += websWrite(wp, "</td style=\"width:auto\"><td style=\"width:auto\">%s</td>", inet_ntoa(addr));
+		ret += websWrite(wp, "</tr>");
+	}
+
+	fclose(fp);
 
 	return ret;
 }

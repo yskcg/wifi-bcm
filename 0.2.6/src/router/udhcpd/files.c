@@ -279,22 +279,24 @@ int read_config(char *file)
 
 void write_leases(void)
 {
-	FILE *fp;
+	FILE *fp,*fp_static;
 	unsigned int i;
 	char buf[255];
 	time_t curr = time(0);
 	unsigned long lease_time;
 	
-	char shell_cmd[128] = {'\0'};
-	system("touch /tmp/log_dhcpd1");
 	
 	if (!(fp = fopen(server_config.lease_file, "w"))) {
 		LOG(LOG_ERR, "Unable to open %s for writing", server_config.lease_file);
 		return;
 	}
 	
+	if (!(fp_static = fopen(static_lease_file, "w"))) {
+		LOG(LOG_ERR, "Unable to open %s for writing", static_lease_file);
+		return;
+	}
 	for (i = 0; i < server_config.max_leases; i++) {
-		if (leases[i].yiaddr != 0) {
+		if (leases[i].yiaddr != 0 && leases[i].flag !=1) {
 			if (server_config.remaining) {
 				if (lease_expired(&(leases[i])))
 					lease_time = 0;
@@ -305,17 +307,21 @@ void write_leases(void)
 			fwrite(&(leases[i].yiaddr), 4, 1, fp);
 			fwrite(&lease_time, 4, 1, fp);
 			fwrite(leases[i].hostname, 64, 1, fp);
-			
-			sprintf(shell_cmd,"echo mac:%02x:%02x:%02x:%02x:%02x:%02x\n >>/tmp/log_dhcpd1 \n",leases[i].chaddr[0]&0xff,leases[i].chaddr[1]&0xff,leases[i].chaddr[2]&0xff,\
-					leases[i].chaddr[3]&0xff,leases[i].chaddr[4]&0xff,leases[i].chaddr[5]&0xff);
-			system(shell_cmd);
-			memset(shell_cmd,0,sizeof(shell_cmd));
-			sprintf(shell_cmd,"echo ip:%d\n>>/tmp/log_dhcpd",leases[i].yiaddr);
-			system(shell_cmd);
-
+		}else{
+			if (server_config.remaining) {
+				if (lease_expired(&(leases[i])))
+					lease_time = 0;
+				else lease_time = leases[i].expires - curr;
+			} else lease_time = leases[i].expires;
+			lease_time = htonl(lease_time);
+			fwrite(leases[i].chaddr, 16, 1, fp_static);
+			fwrite(&(leases[i].yiaddr), 4, 1, fp_static);
+			fwrite(&lease_time, 4, 1, fp_static);
+			fwrite(leases[i].hostname, 64, 1, fp_static);
 		}
 	}
 	fclose(fp);
+	fclose(fp_static);
 	
 	if (server_config.notify_file) {
 		sprintf(buf, "%s %s", server_config.notify_file, server_config.lease_file);
@@ -409,6 +415,10 @@ void add_static_leases()
 		strcpy(lease.hostname,"static");
 		LOG(LOG_INFO, "udhcp %s %d start:%u end:%u act:%u\n", __FUNCTION__,__LINE__,ntohl(server_config.start),ntohl(server_config.end),ntohl(lease.yiaddr));
 		/* ADDME: is it a static lease */
+		if (find_lease_by_chaddr(lease.chaddr)!=NULL){
+			continue;
+		}
+
 		if (ntohl(lease.yiaddr) >= ntohl(server_config.start) 
 		&&  ntohl(lease.yiaddr) <= ntohl(server_config.end) ){
 			lease.expires = ntohl(LEASE_TIME);

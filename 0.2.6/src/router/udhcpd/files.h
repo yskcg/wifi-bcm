@@ -2,6 +2,7 @@
 #ifndef _FILES_H
 #define _FILES_H
 
+#define static_lease_file "/tmp/udhcpd0_static.leases"
 struct config_keyword {
 	char keyword[14];
 	int (*handler)(char *line, void *var);
