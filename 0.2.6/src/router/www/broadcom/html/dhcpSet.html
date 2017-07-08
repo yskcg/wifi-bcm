@@ -45,6 +45,28 @@
                 return false;
             });
 
+            //config the lan network
+            $("#static_ip_submit").click(function () {
+                var static_ip = $("#static_ip_start_left").text() + $("#static_ip_start_right").val();
+                var static_ip_mac = $("#static_ip_mac").val();
+                var static_ip_num = $("#static_ip_num").val();
+
+                $.post(
+                    "static_ip_config.cgi",
+                    {
+                        static_ip_num:static_ip_num,
+                        static_ip_mac:static_ip_mac,
+                        static_ip:static_ip,
+                        action:"Apply"
+                    },
+                    function (data, status) {
+                        location.reload();
+                        console.log("success!");
+                    }
+                );
+                return false;
+            });
+
         });
     </script>
 
@@ -178,22 +200,22 @@
                                 <div class="form-group">
                                     <label class="control-label">分配IP地址：</label>
                                     <div class="input-box">
-                                        192.168.200.
-                                        <input type="text" value="100" class="input small-input" />
+                                        <span id="static_ip_start_left">192.168.200.</span><input id = "static_ip_start_right" type="text" class="input small-input" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">MAC地址：</label>
                                     <div class="input-box text-center">
-                                        <input type="text" class="input" value="F0:B4:29:54:7F:A8"/>
+                                        <input type="text" id = "static_ip_mac" class="input" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="btn-box">
-                                        <button type="submit" class="btn btn-primary">应用</button>
+                                        <button type="submit" id = "static_ip_submit" class="btn btn-primary">应用</button>
                                     </div>
                                 </div>
                                 <div class="table-box">
+                                    <span id="static_ip_num" value = "<% nvram_get("wl0_bss_enabled"); %>" hidden></span>
                                     <table class="table" border="0" cellpadding="0" cellspacing="0">
                                         <thead>
                                         <tr>
@@ -201,23 +223,8 @@
                                             <th>MAC地址</th>
                                             <th>分配IP地址</th>
                                         </tr>
+                                        <% lan_static_leases(); %>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" />
-                                            </td>
-                                            <td>F0:B4:29:54:7F:A8</td>
-                                            <td>192.168.200.100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" />
-                                            </td>
-                                            <td>F0:B4:29:54:7F:A8</td>
-                                            <td>192.168.200.100</td>
-                                        </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>

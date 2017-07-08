@@ -642,11 +642,6 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 	sprintf(sigusr1, "-%d", SIGUSR1);
 	eval("killall", sigusr1, "udhcpd");
 
-	/*Write out static leases file*/
-	memset(sigusr1,0,sizeof(sigusr1));
-	sprintf(sigusr1,"-%d",SIGUSR2);
-	eval("killall", sigusr1, "udhcpd");
-	
 	printf("%s %d sigusr1:%d\n",__FUNCTION__,__LINE__,SIGUSR1);
 	/* Count the number of lan and guest interfaces */
 
@@ -693,6 +688,28 @@ ej_lan_leases(int eid, webs_t wp, int argc, char_t **argv)
 		fclose(fp);
 		fp = NULL;
 	}
+
+	return ret;
+}
+
+static int
+ej_lan_static_leases(int eid, webs_t wp, int argc, char_t **argv)
+{
+	FILE *fp = NULL;
+	struct lease_t lease;
+	int i;
+	int index,num_interfaces=0;
+	char buf[128];
+	struct in_addr addr;
+	unsigned long expires = 0;
+	char sigusr1[] = "-XX";
+	int ret = 0;
+
+	/* Write out leases file */
+	sprintf(sigusr1, "-%d", SIGUSR1);
+	eval("killall", sigusr1, "udhcpd");
+
+	printf("%s %d sigusr1:%d\n",__FUNCTION__,__LINE__,SIGUSR1);
 
 	/*for the static lease*/
 
@@ -15842,6 +15859,7 @@ struct ej_handler ej_handlers[] = {
 	{ "emf_rtport_entries_display", ej_emf_rtport_entries_display },
 	{ "lan_guest_iflist", ej_lan_guest_iflist },
 	{ "lan_leases", ej_lan_leases },
+	{ "lan_static_leases", ej_lan_static_leases	},
 	{ "asp_list", ej_asp_list },
 	{ "kernel_version", ej_kernel_version },
 #ifdef __CONFIG_WAPI_IAS__
