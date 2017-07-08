@@ -26,6 +26,12 @@
                 $("#static_ip").hide();
                 $("#static_gateway").hide();
                 $("#static_mask").hide();
+            }else if(network_mode =="dhcp"){
+                $("#static_ip").hide();
+                $("#static_gateway").hide();
+                $("#static_mask").hide();
+                $("#pppoe_user").hide();
+                $("#pppoe_passwd").hide();
             }
         }
 
